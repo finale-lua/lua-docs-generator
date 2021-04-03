@@ -29,15 +29,19 @@
         "@babel/preset-env": "^7.13.9",
         "@babel/preset-typescript": "^7.13.0",
         "@nick-mazuk/eslint-config": "^0.7.51",
+        "@types/fs-extra": "^9.0.10",
         "@types/jest": "^26.0.15",
-        "@types/node": "^14.14.32",
+        "@types/node": "^14.14.37",
         "babel-jest": "^26.5.2",
         "eslint": "^7.21.0",
         "jest": "^26.6.3",
         "prettier": "^2.2.1"
     },
     "dependencies": {
+        "@types/n-readlines": "^1.0.1",
         "esbuild": "^0.11.4",
+        "fs-extra": "^9.1.0",
+        "n-readlines": "^1.0.1",
         "slugify": "^1.5.0",
         "typescript": "^4.2.3"
     }

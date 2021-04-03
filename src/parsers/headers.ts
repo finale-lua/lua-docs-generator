@@ -8,15 +8,16 @@ export const isHeader = (line: string): boolean => {
 }
 
 // --: (number) Number of whatever is done or nil if an error occurred
-export const parseHeader = (line: string): ParsedHeader => {
+export const parseHeader = (line: string, modulePrefix?: string): ParsedHeader => {
     const lineRegex = /% ([a-z_]*)(.*)/iu
     const groups = line.match(lineRegex)
     if (!groups) throw new Error(`Line "${line}" does not define a valid header`)
 
     const [, name, remainder] = groups
+    const code = `${modulePrefix ? `${modulePrefix}.` : ''}${name}${remainder}`
 
     return {
         name,
-        markdown: [`## ${name}`, '', '```lua', name + remainder, '```'].join('\n'),
+        markdown: [`## ${name}`, '', '```lua', code, '```'].join('\n'),
     }
 }

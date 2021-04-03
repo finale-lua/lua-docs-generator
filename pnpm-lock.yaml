@@ -1,5 +1,8 @@
 dependencies:
+  '@types/n-readlines': 1.0.1
   esbuild: 0.11.4
+  fs-extra: 9.1.0
+  n-readlines: 1.0.1
   slugify: 1.5.0
   typescript: 4.2.3
 devDependencies:
@@ -7,8 +10,9 @@ devDependencies:
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
   '@babel/preset-typescript': 7.13.0_@babel+core@7.13.10
   '@nick-mazuk/eslint-config': 0.7.51_af8dcb2f4a80ce8c2000540347e29867
+  '@types/fs-extra': 9.0.10
   '@types/jest': 26.0.21
-  '@types/node': 14.14.35
+  '@types/node': 14.14.37
   babel-jest: 26.6.3_@babel+core@7.13.10
   eslint: 7.22.0
   jest: 26.6.3
@@ -1449,6 +1453,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Vs0hm0vPahPMYi9tDjtP66llufgO3ST16WXaSTtDGEl9cewAl3AibmxWw6TINOqHPT9z0uABKAYjT9jNSg4npw==
+  /@types/fs-extra/9.0.10:
+    dependencies:
+      '@types/node': 14.14.37
+    dev: true
+    resolution:
+      integrity: sha512-O9T2LLkRDiTlalOBdjEkcnT0MRdT2+wglCl7pJUJ3mkWkR8hX4K+5bg2raQNJcLv4V8zGuTXe7Ud3wSqkTyuyQ==
   /@types/graceful-fs/4.1.5:
     dependencies:
       '@types/node': 14.14.35
@@ -1486,10 +1496,19 @@ packages:
     dev: true
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+  /@types/n-readlines/1.0.1:
+    dependencies:
+      '@types/node': 14.14.37
+    dev: false
+    resolution:
+      integrity: sha512-n1ND4k+9hgtil2HnHK+1tIj1UWchsD+RwoH7eVQqLbUe8AxwLuqDEnx3Riq+twHoMTjP80Q/ilB3LGdyXKfTEg==
   /@types/node/14.14.35:
     dev: true
     resolution:
       integrity: sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag==
+  /@types/node/14.14.37:
+    resolution:
+      integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
   /@types/normalize-package-data/2.4.0:
     dev: true
     resolution:
@@ -1887,6 +1906,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=
+  /at-least-node/1.0.0:
+    dev: false
+    engines:
+      node: '>= 4.0.0'
+    resolution:
+      integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
   /atob/2.1.2:
     dev: true
     engines:
@@ -3275,6 +3300,17 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk=
+  /fs-extra/9.1.0:
+    dependencies:
+      at-least-node: 1.0.0
+      graceful-fs: 4.2.6
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==
   /fs.realpath/1.0.0:
     dev: true
     resolution:
@@ -3405,7 +3441,6 @@ packages:
     resolution:
       integrity: sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==
   /graceful-fs/4.2.6:
-    dev: true
     resolution:
       integrity: sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
   /growly/1.3.0:
@@ -4430,6 +4465,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
+  /jsonfile/6.1.0:
+    dependencies:
+      universalify: 2.0.0
+    dev: false
+    optionalDependencies:
+      graceful-fs: 4.2.6
+    resolution:
+      integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==
   /jsprim/1.4.1:
     dependencies:
       assert-plus: 1.0.0
@@ -4695,6 +4738,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-0ZIR9PasPxGXmRsEF8jsDzndzHDj7tIav+JUmvIFB/WHswliFnquxECT/De7GR4yg99ky/NlRKJT82G1y271bw==
+  /n-readlines/1.0.1:
+    dev: false
+    engines:
+      node: '>=6.x.x'
+    resolution:
+      integrity: sha512-z4SyAIVgMy7CkgsoNw7YVz40v0g4+WWvvqy8+ZdHrCtgevcEO758WQyrYcw3XPxcLxF+//RszTz/rO48nzD0wQ==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -6167,6 +6216,12 @@ packages:
       node: '>= 4.0.0'
     resolution:
       integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
+  /universalify/2.0.0:
+    dev: false
+    engines:
+      node: '>= 10.0.0'
+    resolution:
+      integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
   /unset-value/1.0.0:
     dependencies:
       has-value: 0.3.1
@@ -6408,12 +6463,16 @@ specifiers:
   '@babel/preset-env': ^7.13.9
   '@babel/preset-typescript': ^7.13.0
   '@nick-mazuk/eslint-config': ^0.7.51
+  '@types/fs-extra': ^9.0.10
   '@types/jest': ^26.0.15
-  '@types/node': ^14.14.32
+  '@types/n-readlines': ^1.0.1
+  '@types/node': ^14.14.37
   babel-jest: ^26.5.2
   esbuild: ^0.11.4
   eslint: ^7.21.0
+  fs-extra: ^9.1.0
   jest: ^26.6.3
+  n-readlines: ^1.0.1
   prettier: ^2.2.1
   slugify: ^1.5.0
   typescript: ^4.2.3

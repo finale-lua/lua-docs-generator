@@ -36,7 +36,7 @@ describe('checks if line is a header', () => {
 })
 
 describe('parses header', () => {
-    it('parses basic outputs', () => {
+    it('parses basic header', () => {
         expect(
             parseHeader('% chromatic_transposition(note, interval, alteration, simplify)')
         ).toMatchObject({
@@ -46,6 +46,23 @@ describe('parses header', () => {
                 '',
                 '```lua',
                 'chromatic_transposition(note, interval, alteration, simplify)',
+                '```',
+            ].join('\n'),
+        })
+    })
+    it('parses header with module prefix', () => {
+        expect(
+            parseHeader(
+                '% chromatic_transposition(note, interval, alteration, simplify)',
+                'transposition'
+            )
+        ).toMatchObject({
+            name: 'chromatic_transposition',
+            markdown: [
+                '## chromatic_transposition',
+                '',
+                '```lua',
+                'transposition.chromatic_transposition(note, interval, alteration, simplify)',
                 '```',
             ].join('\n'),
         })
