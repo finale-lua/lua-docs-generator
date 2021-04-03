@@ -13,22 +13,16 @@ describe('checks if line defines a parameter', () => {
         expect(isParameter('-- @ first (string) Text of the first parameter')).toBe(true)
     })
     it('returns false for headers', () => {
-        expect(isParameter('| Begins a module/file comment, e.g., "this file does *this*"')).toBe(
-            false
-        )
-        expect(isParameter('## Begins a module/file comment, e.g., "this file does *this*"')).toBe(
+        expect(isParameter('% chromatic_transposition(note, interval, alteration, simplify)')).toBe(
             false
         )
     })
     it('returns false for outputs', () => {
         expect(
-            isParameter(': (number) Number of whatever iss done or nil if an error occurred')
+            isParameter(': (number) Number of whatever is done or nil if an error occurred')
         ).toBe(false)
     })
     it('returns false for descriptions', () => {
-        expect(isParameter('% This is the purpose of the function, i.e., what it *does*.')).toBe(
-            false
-        )
         expect(isParameter('This is the purpose of the function, i.e., what it *does*.')).toBe(
             false
         )

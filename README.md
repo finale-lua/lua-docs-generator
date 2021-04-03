@@ -1,6 +1,6 @@
 # Lua docs generator
 
-This is a JavaScript script that will create documentation from Lua source code. It parses any Lua files in the current directory for multi-line comment blocks and sequentially adds them to a Markdown file. It is inspired by [p3lim/lua-doc-parser](https://github.com/p3lim/lua-doc-parser).
+This is a JavaScript script that will create documentation from Lua source code. It parses any Lua files in the current directory for multi-line comment blocks and sequentially adds them to a Markdown file (Github flavored Markdown). It is inspired by [p3lim/lua-doc-parser](https://github.com/p3lim/lua-doc-parser).
 
 It supports many aspects of [ExpLua](http://lua-users.org/wiki/ExpLua) to create very clean documentation.
 

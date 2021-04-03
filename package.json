@@ -2,6 +2,7 @@
     "name": "@nick-mazuk/typescript-template",
     "version": "0.0.1",
     "description": "",
+    "type": "module",
     "scripts": {
         "eslint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
         "check-types": "tsc --noemit",
@@ -15,12 +16,11 @@
     "jest": {
         "collectCoverage": true,
         "testPathIgnorePatterns": [
-            "/node_modules/",
+            "/node_modules/(?!@nick-mazuk/lib)",
             "/js/"
         ],
         "globalSetup": "./test-setup.ts"
     },
-    "type": "commonjs",
     "keywords": [],
     "author": "",
     "license": "MIT",
@@ -38,6 +38,7 @@
     },
     "dependencies": {
         "esbuild": "^0.11.4",
+        "slugify": "^1.5.0",
         "typescript": "^4.2.3"
     }
 }
