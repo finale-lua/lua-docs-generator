@@ -1,0 +1,43 @@
+{
+    "name": "@nick-mazuk/typescript-template",
+    "version": "0.0.1",
+    "description": "",
+    "scripts": {
+        "eslint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
+        "check-types": "tsc --noemit",
+        "lint": "npm run eslint && npm run check-types",
+        "test": "jest --passWithNoTests",
+        "test:watch": "npm run test -- --watch --passWithNoTests",
+        "build": "tsc",
+        "prepublishOnly": "npm run lint && npm run test",
+        "postversion": "git push && git push --tags"
+    },
+    "jest": {
+        "collectCoverage": true,
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "/js/"
+        ],
+        "globalSetup": "./test-setup.ts"
+    },
+    "type": "commonjs",
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/core": "^7.13.8",
+        "@babel/preset-env": "^7.13.9",
+        "@babel/preset-typescript": "^7.13.0",
+        "@nick-mazuk/eslint-config": "^0.7.51",
+        "@types/jest": "^26.0.15",
+        "@types/node": "^14.14.32",
+        "babel-jest": "^26.5.2",
+        "eslint": "^7.21.0",
+        "jest": "^26.6.3",
+        "prettier": "^2.2.1"
+    },
+    "dependencies": {
+        "esbuild": "^0.11.4",
+        "typescript": "^4.2.3"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "strict": true,
+    "alwaysStrict": true,
+    "compilerOptions": {
+        "target": "es5",
+        "allowJs": true,
+        "lib": ["DOM"],
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "esModuleInterop": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "outDir": "./js",
+        "declaration": true
+    },
+    "include": [
+        "**/*.ts",
+        "*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "js**/*"
+    ]
+}
