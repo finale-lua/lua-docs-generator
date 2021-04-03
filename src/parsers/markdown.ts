@@ -11,14 +11,15 @@ type ParsedMarkdown = {
 
 const createParameter = (line: string, currentBlock: CurrentBlock): string[] => {
     const output: string[] = []
-    if (currentBlock !== 'parameter') output.push('| Input | Type | Description |')
+    if (currentBlock !== 'parameter')
+        output.push('| Input | Type | Description |', '| --- | --- | --- |')
     output.push(parseParameter(line))
     return output
 }
 
 const createOutput = (line: string, currentBlock: CurrentBlock): string[] => {
     const output: string[] = []
-    if (currentBlock !== 'output') output.push('| Output type | Description |')
+    if (currentBlock !== 'output') output.push('| Output type | Description |', '| --- | --- |')
     output.push(parseOutput(line))
     return output
 }
