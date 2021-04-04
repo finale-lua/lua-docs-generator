@@ -1,11 +1,13 @@
+const outputRegex = /: \(([\w |,[\]]*)\) ?(.*)/iu
+
 export const isOutput = (line: string): boolean => {
-    return line.startsWith(': ') || line.startsWith('--: ')
+    const groups = line.match(outputRegex)
+    return Boolean(groups)
 }
 
 // --: (number) Number of whatever is done or nil if an error occurred
 export const parseOutput = (line: string): string => {
-    const lineRegex = /: \(([\w |,[\]]*)\) ?(.*)/iu
-    const groups = line.match(lineRegex)
+    const groups = line.match(outputRegex)
     if (!groups) throw new Error(`Line "${line}" does not define a valid output`)
 
     const [, type, description] = groups

@@ -14,6 +14,9 @@ describe('checks if line defines a return value', () => {
     it('identifies an output without a description', () => {
         expect(isOutput('--: (number)')).toBe(true)
     })
+    it('returns false for malformed outputs', () => {
+        expect(isOutput(': number of whatever is done or nil if an error occurred')).toBe(false)
+    })
     it('returns false for parameters', () => {
         expect(isOutput('@ first (string) Text of the first parameter')).toBe(false)
         expect(isOutput('@ [optional] (any) Optional parameters to the called whatever')).toBe(

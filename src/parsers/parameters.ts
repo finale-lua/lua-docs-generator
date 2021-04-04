@@ -1,11 +1,13 @@
+const parameterRegex = /@ (\[?[\w]*\]?) \(([\w[\] |]*)\) ?(.*)/iu
+
 export const isParameter = (line: string): boolean => {
-    return line.startsWith('@') || line.startsWith(' @') || line.startsWith('-- @')
+    const groups = line.match(parameterRegex)
+    return Boolean(groups)
 }
 
 // -- @ [first] (string[]) Text of the first parameter
 export const parseParameter = (line: string): string => {
-    const lineRegex = /@ (\[?[\w]*\]?) \(([\w[\] |]*)\) ?(.*)/iu
-    const groups = line.match(lineRegex)
+    const groups = line.match(parameterRegex)
     if (!groups) throw new Error(`Line "${line}" does not define a valid parameter`)
 
     const [, name, type, description] = groups
