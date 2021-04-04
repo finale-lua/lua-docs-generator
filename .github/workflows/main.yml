@@ -17,6 +17,15 @@ jobs:
       - run: npm run lint
       - run: npm run test
       - run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14
+      - run: npx pnpm i
+      - run: npm run build
       - name: Commit new build outputs
         run: |
           git config user.name CI

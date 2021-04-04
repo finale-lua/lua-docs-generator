@@ -9,7 +9,7 @@ export const isHeader = (line: string): boolean => {
 
 // --: (number) Number of whatever is done or nil if an error occurred
 export const parseHeader = (line: string, modulePrefix?: string): ParsedHeader => {
-    const lineRegex = /% ([a-z_]*)(.*)/iu
+    const lineRegex = /% ([\w]*)(.*)/iu
     const groups = line.match(lineRegex)
     if (!groups) throw new Error(`Line "${line}" does not define a valid header`)
 

@@ -4,7 +4,7 @@ export const isOutput = (line: string): boolean => {
 
 // --: (number) Number of whatever is done or nil if an error occurred
 export const parseOutput = (line: string): string => {
-    const lineRegex = /: \(([a-z]*\[?\]?)\) ?(.*)/iu
+    const lineRegex = /: \(([\w |,[\]]*)\) ?(.*)/iu
     const groups = line.match(lineRegex)
     if (!groups) throw new Error(`Line "${line}" does not define a valid output`)
 

@@ -48,4 +48,18 @@ describe('parses parameters', () => {
     it('parses outputs without a description', () => {
         expect(parseOutput('--: (number)')).toBe('| `number` |  |')
     })
+    it('parses outputs with multiple types', () => {
+        expect(
+            parseOutput(': (string | nill) the first font info that was stripped or nil if none')
+        ).toBe('| `string | nill` | the first font info that was stripped or nil if none |')
+    })
+    it('parses multiple outputs', () => {
+        expect(
+            parseOutput(
+                ': (string, boolean) the first font info that was stripped and whether or not it was successful'
+            )
+        ).toBe(
+            '| `string, boolean` | the first font info that was stripped and whether or not it was successful |'
+        )
+    })
 })

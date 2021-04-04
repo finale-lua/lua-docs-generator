@@ -59,4 +59,9 @@ describe('parses parameters', () => {
     it('parses parameters without a description', () => {
         expect(parseParameter('-- @ first (string[])')).toBe('| `first` | `string[]` |  |')
     })
+    it('parses parameters with multiple types', () => {
+        expect(parseParameter('-- @ first (string[] | number[])')).toBe(
+            '| `first` | `string[] | number[]` |  |'
+        )
+    })
 })
