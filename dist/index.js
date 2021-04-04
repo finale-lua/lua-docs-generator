@@ -3859,14 +3859,15 @@ exports.parseFile = parseFile;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseHeader = exports.isHeader = void 0;
+const headerRegex = /% ([\w]*)(.*)/iu;
 const isHeader = (line) => {
-    return line.startsWith('% ') || line.startsWith('--% ') || line.startsWith('-- % ');
+    const groups = line.match(headerRegex);
+    return Boolean(groups);
 };
 exports.isHeader = isHeader;
 // --: (number) Number of whatever is done or nil if an error occurred
 const parseHeader = (line, modulePrefix) => {
-    const lineRegex = /% ([\w]*)(.*)/iu;
-    const groups = line.match(lineRegex);
+    const groups = line.match(headerRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid header`);
     const [, name, remainder] = groups;
@@ -3951,14 +3952,15 @@ exports.parseMarkdown = parseMarkdown;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseModuleName = exports.isModuleName = void 0;
+const moduleRegex = /\$module (.*)/iu;
 const isModuleName = (line) => {
-    return (line.startsWith('$module') || line.startsWith('--$module') || line.startsWith('-- $module'));
+    const groups = line.match(moduleRegex);
+    return Boolean(groups);
 };
 exports.isModuleName = isModuleName;
 // --: (number) Number of whatever is done or nil if an error occurred
 const parseModuleName = (line) => {
-    const lineRegex = /\$module (.*)/iu;
-    const groups = line.match(lineRegex);
+    const groups = line.match(moduleRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid module name`);
     const [, name] = groups;
@@ -3980,14 +3982,15 @@ exports.parseModuleName = parseModuleName;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseOutput = exports.isOutput = void 0;
+const outputRegex = /: \(([\w |,[\]]*)\) ?(.*)/iu;
 const isOutput = (line) => {
-    return line.startsWith(': ') || line.startsWith('--: ');
+    const groups = line.match(outputRegex);
+    return Boolean(groups);
 };
 exports.isOutput = isOutput;
 // --: (number) Number of whatever is done or nil if an error occurred
 const parseOutput = (line) => {
-    const lineRegex = /: \(([\w |,[\]]*)\) ?(.*)/iu;
-    const groups = line.match(lineRegex);
+    const groups = line.match(outputRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid output`);
     const [, type, description] = groups;
@@ -4007,14 +4010,15 @@ exports.parseOutput = parseOutput;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseParameter = exports.isParameter = void 0;
+const parameterRegex = /@ (\[?[\w]*\]?) \(([\w[\] |]*)\) ?(.*)/iu;
 const isParameter = (line) => {
-    return line.startsWith('@') || line.startsWith(' @') || line.startsWith('-- @');
+    const groups = line.match(parameterRegex);
+    return Boolean(groups);
 };
 exports.isParameter = isParameter;
 // -- @ [first] (string[]) Text of the first parameter
 const parseParameter = (line) => {
-    const lineRegex = /@ (\[?[\w]*\]?) \(([\w[\] |]*)\) ?(.*)/iu;
-    const groups = line.match(lineRegex);
+    const groups = line.match(parameterRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid parameter`);
     const [, name, type, description] = groups;
