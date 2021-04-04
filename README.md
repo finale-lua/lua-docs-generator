@@ -2,9 +2,7 @@
 
 This is a JavaScript script that will create documentation from Lua source code. It parses any Lua files in the current directory for multi-line comment blocks and sequentially adds them to a Markdown file (Github flavored Markdown). It is inspired by [p3lim/lua-doc-parser](https://github.com/p3lim/lua-doc-parser).
 
-It supports many aspects of [ExpLua](http://lua-users.org/wiki/ExpLua) to create very clean documentation.
-
-> Note: This action is not yet complete and should not be used in production
+It supports many aspects of [ExpLua](http://lua-users.org/wiki/ExpLua) to create very clean documentation. For more details, see [documentation.md](./documentation.md).
 
 ## Usage
 
@@ -56,10 +54,26 @@ For more details, see [documentation.md](./documentation.md). For more examples 
 ## Example workflow
 
 ```yml
-uses: nick-mazuk/lua-docs-generator@v1
-with:
-  input: '.'
-  output: './docs'
+name: Generate docs
+
+on: push
+
+jobs:
+  test-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nick-mazuk/lua-docs-generator@v1
+        with:
+          input: '.'
+          output: './docs'
+      - name: Push updated docs
+        run: |
+          git config user.name CI
+          git config user.email "<>"
+          git add .
+          git diff --quiet HEAD || git commit -m "$GITHUB_SHA"
+          git push
 ```
 
 ## Bugs
