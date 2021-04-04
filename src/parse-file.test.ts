@@ -7,7 +7,10 @@ const OUTPUT_PATH = 'test-files/outputs/'
 const GENERATED_OUTPUT_PATH = 'test-files/generated-outputs/'
 
 beforeAll(() => {
-    fs.rmdirSync(GENERATED_OUTPUT_PATH, { recursive: true })
+    try {
+        fs.rmdirSync(GENERATED_OUTPUT_PATH, { recursive: true })
+        // eslint-disable-next-line no-empty -- should be empty
+    } catch {}
 })
 
 const tests = ['unit-test-1', 'unit-test-2']

@@ -46,7 +46,7 @@ A description of how the code works
 
 For more details, see [documentation.md](./documentation.md). For more examples on how this script parses Lua files, check out the `test-files` folder.
 
-## Inputs
+## Action Inputs
 
 | Name | Description |
 | --- | --- |
