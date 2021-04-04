@@ -4,6 +4,8 @@ This is a JavaScript script that will create documentation from Lua source code.
 
 It supports many aspects of [ExpLua](http://lua-users.org/wiki/ExpLua) to create very clean documentation.
 
+For examples on how this script parses Lua files, check out the `test-files` folder.
+
 ## Contribute
 
 I welcome contributions! This repo follows the "fork-and-pull" philosophy. If you're going to add a feature, please create an issue first so we can keep track of it.

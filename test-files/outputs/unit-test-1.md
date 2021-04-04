@@ -1,10 +1,14 @@
+# Transposition
+
+An overall description of the module.
+
 - [chromatic_transposition](chromatic_transposition)
 - [diatonic_transposition](diatonic_transposition)
 
 ## chromatic_transposition
 
 ```lua
-chromatic_transposition(note, interval, alteration, simplify)
+transposition.chromatic_transposition(note, interval, alteration, simplify)
 ```
 
 A description of how the code works
@@ -21,7 +25,7 @@ A description of how the code works
 ## diatonic_transposition
 
 ```lua
-diatonic_transposition(note, interval, simplify)
+transposition.diatonic_transposition(note, interval, simplify)
 ```
 
 Another a description of how the code works

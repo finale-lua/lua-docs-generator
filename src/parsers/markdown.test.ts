@@ -91,11 +91,41 @@ it('parses the header', () => {
     })
 })
 
+it('parses the header with module name when defined', () => {
+    expect(
+        parseMarkdown(
+            [
+                '% chromatic_transposition(note, interval, alteration, simplify)',
+                '',
+                'And a description of how the code works',
+            ],
+            'transposition'
+        )
+    ).toMatchObject({
+        markdown: [
+            '## chromatic_transposition',
+            '',
+            '```lua',
+            'transposition.chromatic_transposition(note, interval, alteration, simplify)',
+            '```',
+            '',
+            'And a description of how the code works',
+        ].join('\n'),
+        header: 'chromatic_transposition',
+    })
+})
+
 it('parses returns "undefined" when header is not defined', () => {
     expect(parseMarkdown(['A description of how the code works'])).toMatchObject({
         markdown: 'A description of how the code works',
         // eslint-disable-next-line no-undefined -- required algorithmically
         header: undefined,
+    })
+})
+
+it('parses the module name correctly', () => {
+    expect(parseMarkdown(['$module Transposition'])).toMatchObject({
+        markdown: '# Transposition',
     })
 })
 

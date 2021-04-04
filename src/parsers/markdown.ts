@@ -1,12 +1,14 @@
 import { isHeader, parseHeader } from './headers'
+import { isModuleName, parseModuleName } from './module-name'
 import { isOutput, parseOutput } from './outputs'
 import { isParameter, parseParameter } from './parameters'
 
-type CurrentBlock = 'markdown' | 'parameter' | 'output' | 'header'
+type CurrentBlock = 'markdown' | 'parameter' | 'output' | 'header' | 'module-name'
 type HeaderName = string | undefined
 type ParsedMarkdown = {
     markdown: string
     header: HeaderName
+    moduleDefinition: boolean
 }
 
 const createParameter = (line: string, currentBlock: CurrentBlock): string[] => {
@@ -24,11 +26,11 @@ const createOutput = (line: string, currentBlock: CurrentBlock): string[] => {
     return output
 }
 
-export const parseMarkdown = (markdown: string[]): ParsedMarkdown => {
+export const parseMarkdown = (markdown: string[], moduleName?: string): ParsedMarkdown => {
     const output: string[] = []
     // eslint-disable-next-line init-declarations -- required algorithmically
     let header: HeaderName
-
+    let moduleDefinition = false
     let currentBlock: CurrentBlock = 'markdown'
 
     markdown.forEach((line) => {
@@ -39,15 +41,19 @@ export const parseMarkdown = (markdown: string[]): ParsedMarkdown => {
             output.push(...createOutput(line, currentBlock))
             currentBlock = 'output'
         } else if (isHeader(line)) {
-            const parsedHeader = parseHeader(line)
+            const parsedHeader = parseHeader(line, moduleName)
             output.push(parsedHeader.markdown)
             header = parsedHeader.name
             currentBlock = 'header'
+        } else if (isModuleName(line)) {
+            output.push(parseModuleName(line).markdown)
+            moduleDefinition = true
+            currentBlock = 'module-name'
         } else {
             output.push(line)
             currentBlock = 'markdown'
         }
     })
 
-    return { markdown: output.join('\n'), header }
+    return { markdown: output.join('\n'), header, moduleDefinition }
 }
