@@ -1,9 +1,8 @@
 dependencies:
-  '@types/n-readlines': 1.0.1
+  '@actions/core': 1.2.6
   fs-extra: 9.1.0
   n-readlines: 1.0.1
   slugify: 1.5.0
-  typescript: 4.2.3
 devDependencies:
   '@babel/core': 7.13.10
   '@babel/preset-env': 7.13.10_@babel+core@7.13.10
@@ -11,13 +10,20 @@ devDependencies:
   '@nick-mazuk/eslint-config': 0.7.51_af8dcb2f4a80ce8c2000540347e29867
   '@types/fs-extra': 9.0.10
   '@types/jest': 26.0.21
+  '@types/n-readlines': 1.0.1
   '@types/node': 14.14.37
+  '@vercel/ncc': 0.27.0
   babel-jest: 26.6.3_@babel+core@7.13.10
   eslint: 7.22.0
   jest: 26.6.3
   prettier: 2.2.1
+  typescript: 4.2.3
 lockfileVersion: 5.2
 packages:
+  /@actions/core/1.2.6:
+    dev: false
+    resolution:
+      integrity: sha512-ZQYitnqiyBc3D+k7LsgSBmMDVkOVidaagDG7j3fOym77jNunWRuYx7VSHa9GNfFZh+zh61xsCjRj4JxMZlDqTA==
   /@babel/code-frame/7.12.11:
     dependencies:
       '@babel/highlight': 7.13.10
@@ -1498,7 +1504,7 @@ packages:
   /@types/n-readlines/1.0.1:
     dependencies:
       '@types/node': 14.14.37
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-n1ND4k+9hgtil2HnHK+1tIj1UWchsD+RwoH7eVQqLbUe8AxwLuqDEnx3Riq+twHoMTjP80Q/ilB3LGdyXKfTEg==
   /@types/node/14.14.35:
@@ -1506,6 +1512,7 @@ packages:
     resolution:
       integrity: sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag==
   /@types/node/14.14.37:
+    dev: true
     resolution:
       integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
   /@types/normalize-package-data/2.4.0:
@@ -1686,6 +1693,11 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-NXKRM3oOVQL8yNFDNCZuieRIwZ5UtjNLYtmMx2PacEAGmbaEYtGgVHUHVyZvU/0rYZcizdrWjDo+WBtRPSgq+A==
+  /@vercel/ncc/0.27.0:
+    dev: true
+    hasBin: true
+    resolution:
+      integrity: sha512-DllIJQapnU2YwewIhh/4dYesmMQw3h2cFtabECc/zSJHqUbNa0eJuEkRa6DXbZvh1YPWBtYQoPV17NlDpBw1Vw==
   /abab/2.0.5:
     dev: true
     resolution:
@@ -6150,7 +6162,7 @@ packages:
     resolution:
       integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
   /typescript/4.2.3:
-    dev: false
+    dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
@@ -6452,6 +6464,7 @@ packages:
     resolution:
       integrity: sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==
 specifiers:
+  '@actions/core': ^1.2.6
   '@babel/core': ^7.13.8
   '@babel/preset-env': ^7.13.9
   '@babel/preset-typescript': ^7.13.0
@@ -6460,6 +6473,7 @@ specifiers:
   '@types/jest': ^26.0.15
   '@types/n-readlines': ^1.0.1
   '@types/node': ^14.14.37
+  '@vercel/ncc': ^0.27.0
   babel-jest: ^26.5.2
   eslint: ^7.21.0
   fs-extra: ^9.1.0

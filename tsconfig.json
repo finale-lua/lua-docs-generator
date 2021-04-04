@@ -2,7 +2,7 @@
     "strict": true,
     "alwaysStrict": true,
     "compilerOptions": {
-        "target": "es5",
+        "target": "es2015",
         "allowJs": true,
         "lib": ["DOM"],
         "skipLibCheck": true,
@@ -14,9 +14,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "isolatedModules": true,
-        "outDir": "./js",
-        "declaration": true
+        "declaration": false
     },
     "include": [
         "**/*.ts",

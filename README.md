@@ -4,7 +4,67 @@ This is a JavaScript script that will create documentation from Lua source code.
 
 It supports many aspects of [ExpLua](http://lua-users.org/wiki/ExpLua) to create very clean documentation.
 
-For examples on how this script parses Lua files, check out the `test-files` folder.
+> Note: This action is not yet complete and should not be used in production
+
+## Usage
+
+For documenting your lua scripts, just add multiline comments. All valid markdown is allowed in these multiline comments. For instance, this comment…
+
+```lua
+--[[
+% chromatic_transposition(note, interval, alteration, simplify)
+
+A description of how the code works
+
+@ first (string) Text of the first parameter
+@ [optional] (any) Optional parameters to be called whatever
+
+: (number) Number of whatever is done or nil if an error occurred
+--]]
+```
+
+…produces this markdown.
+
+```md
+## chromatic_transposition
+
+\`\`\`lua
+chromatic_transposition(note, interval, alteration, simplify)
+&#96;&#96;&#96;
+
+A description of how the code works
+
+| Input | Type | Description |
+| --- | --- | --- |
+| `first` | `string` | Text of the first parameter |
+| `optional` (optional) | `any` | Optional parameters to be called whatever |
+
+| Output type | Description |
+| --- | --- |
+| `number` | Number of whatever is done or nil if an error occurred |
+```
+
+For more details, see [documentation.md](./documentation.md). For more examples on how this script parses Lua files, check out the `test-files` folder.
+
+## Inputs
+
+| Name | Description |
+| --- | --- |
+| `input` (required) | The folder of the lua scripts |
+| `output` (required) | The folder where to save the documentation |
+
+## Example workflow
+
+```yml
+uses: nick-mazuk/lua-docs-generator@v1
+with:
+  input: '.'
+  output: './docs'
+```
+
+## Bugs
+
+If you find a bug, create an issue.
 
 ## Contribute
 

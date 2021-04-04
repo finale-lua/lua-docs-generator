@@ -1,0 +1,17 @@
+name: 'Lua docs generator'
+description: 'Create documentation from lua scripts'
+branding:
+  icon: book-open
+  color: blue
+inputs:
+  input:  # id of input
+    description: 'The folder of the lua scripts'
+    required: true
+    default: '.'
+  output:  # id of input
+    description: 'The folder where to save the documentation'
+    required: true
+    default: './docs'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

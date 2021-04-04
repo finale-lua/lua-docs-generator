@@ -2,21 +2,20 @@
     "name": "@nick-mazuk/typescript-template",
     "version": "0.0.1",
     "description": "",
-    "type": "module",
     "scripts": {
         "eslint": "eslint '**/*.{js,ts,tsx}' --quiet --fix",
         "check-types": "tsc --noemit",
         "lint": "npm run eslint && npm run check-types",
-        "test": "jest --passWithNoTests",
-        "test:watch": "npm run test -- --watch --passWithNoTests",
-        "build": "tsc",
+        "test": "jest",
+        "test:watch": "npm run test -- --watch",
+        "build": "ncc build src/index.ts -o dist --target=es2015",
         "prepublishOnly": "npm run lint && npm run test",
         "postversion": "git push && git push --tags"
     },
     "jest": {
         "collectCoverage": true,
         "testPathIgnorePatterns": [
-            "/node_modules/(?!@nick-mazuk/lib)",
+            "/node_modules/",
             "/js/"
         ],
         "globalSetup": "./test-setup.ts"
@@ -31,17 +30,19 @@
         "@nick-mazuk/eslint-config": "^0.7.51",
         "@types/fs-extra": "^9.0.10",
         "@types/jest": "^26.0.15",
+        "@types/n-readlines": "^1.0.1",
         "@types/node": "^14.14.37",
+        "@vercel/ncc": "^0.27.0",
         "babel-jest": "^26.5.2",
         "eslint": "^7.21.0",
         "jest": "^26.6.3",
-        "prettier": "^2.2.1"
+        "prettier": "^2.2.1",
+        "typescript": "^4.2.3"
     },
     "dependencies": {
-        "@types/n-readlines": "^1.0.1",
+        "@actions/core": "^1.2.6",
         "fs-extra": "^9.1.0",
         "n-readlines": "^1.0.1",
-        "slugify": "^1.5.0",
-        "typescript": "^4.2.3"
+        "slugify": "^1.5.0"
     }
 }
