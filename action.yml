@@ -1,4 +1,4 @@
-name: 'Lua docs generator'
+name: 'Generate lua docs'
 description: 'Create documentation from lua scripts'
 branding:
   icon: book-open
