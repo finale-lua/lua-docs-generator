@@ -21,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@v2.1.5
         with:
           node-version: 14
       - run: npx pnpm i
       - run: npm run build
-      - name: Commit new build outputs
-        run: |
-          git config user.name CI
-          git config user.email "<>"
-          git add .
-          git diff --quiet HEAD || git commit -m "Build"
-          git push
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
