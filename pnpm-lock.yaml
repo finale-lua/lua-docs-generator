@@ -1,6 +1,5 @@
 dependencies:
   '@types/n-readlines': 1.0.1
-  esbuild: 0.11.4
   fs-extra: 9.1.0
   n-readlines: 1.0.1
   slugify: 1.5.0
@@ -2621,12 +2620,6 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-QCOllgZJtaUo9miYBcLChTUaHNjJF3PYs1VidD7AwiEj1kYxKeQTctLAezAOH5ZKRH0g2IgPn6KwB4IT8iRpvA==
-  /esbuild/0.11.4:
-    dev: false
-    hasBin: true
-    requiresBuild: true
-    resolution:
-      integrity: sha512-qWGlOOTwyTn4f846LoR47Mif4Aek4rY9ChdXN7q7G15HpDYq3pxwnPFWe2os/jOq8naFh2Z+FqWfkq8ZP6kATw==
   /escalade/3.1.1:
     dev: true
     engines:
@@ -6468,7 +6461,6 @@ specifiers:
   '@types/n-readlines': ^1.0.1
   '@types/node': ^14.14.37
   babel-jest: ^26.5.2
-  esbuild: ^0.11.4
   eslint: ^7.21.0
   fs-extra: ^9.1.0
   jest: ^26.6.3

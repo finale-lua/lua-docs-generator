@@ -1,11 +1,3 @@
---[[
-$module Transposition
-
-An overall description of the module.
---]]
-
--- make sure the module definition is separated from the first methods's definition
-
 local transposition = {}
 
 --[[

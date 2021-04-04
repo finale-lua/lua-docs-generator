@@ -39,7 +39,6 @@
     },
     "dependencies": {
         "@types/n-readlines": "^1.0.1",
-        "esbuild": "^0.11.4",
         "fs-extra": "^9.1.0",
         "n-readlines": "^1.0.1",
         "slugify": "^1.5.0",
