@@ -3895,6 +3895,8 @@ const outputs_1 = __nccwpck_require__(8921);
 const parameters_1 = __nccwpck_require__(2355);
 const createParameter = (line, currentBlock) => {
     const output = [];
+    if (currentBlock !== 'blank-line' && currentBlock !== 'parameter')
+        output.push('');
     if (currentBlock !== 'parameter')
         output.push('| Input | Type | Description |', '| --- | --- | --- |');
     output.push(parameters_1.parseParameter(line));
@@ -3902,6 +3904,8 @@ const createParameter = (line, currentBlock) => {
 };
 const createOutput = (line, currentBlock) => {
     const output = [];
+    if (currentBlock !== 'blank-line' && currentBlock !== 'output')
+        output.push('');
     if (currentBlock !== 'output')
         output.push('| Output type | Description |', '| --- | --- |');
     output.push(outputs_1.parseOutput(line));
@@ -3935,7 +3939,10 @@ const parseMarkdown = (markdown, moduleName) => {
         }
         else {
             output.push(line);
-            currentBlock = 'markdown';
+            if (line === '')
+                currentBlock = 'blank-line';
+            else
+                currentBlock = 'markdown';
         }
     });
     return { markdown: output.join('\n'), header, moduleDefinition };
