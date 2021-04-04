@@ -25,12 +25,12 @@ A description of how the code works
 
 …produces this markdown.
 
-```md
+````md
 ## chromatic_transposition
 
-\`\`\`lua
+```lua
 chromatic_transposition(note, interval, alteration, simplify)
-&#96;&#96;&#96;
+```
 
 A description of how the code works
 
@@ -42,7 +42,7 @@ A description of how the code works
 | Output type | Description |
 | --- | --- |
 | `number` | Number of whatever is done or nil if an error occurred |
-```
+````
 
 For more details, see [documentation.md](./documentation.md). For more examples on how this script parses Lua files, check out the `test-files` folder.
 
