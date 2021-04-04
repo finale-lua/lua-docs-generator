@@ -3986,7 +3986,7 @@ const isOutput = (line) => {
 exports.isOutput = isOutput;
 // --: (number) Number of whatever is done or nil if an error occurred
 const parseOutput = (line) => {
-    const lineRegex = /: \(([a-z]*\[?\]?)\) (.*)/iu;
+    const lineRegex = /: \(([a-z]*\[?\]?)\) ?(.*)/iu;
     const groups = line.match(lineRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid output`);
@@ -4013,7 +4013,7 @@ const isParameter = (line) => {
 exports.isParameter = isParameter;
 // -- @ [first] (string[]) Text of the first parameter
 const parseParameter = (line) => {
-    const lineRegex = /@ (\[?[a-z_]*\]?) \(([a-z]*\[?\]?)\) (.*)/iu;
+    const lineRegex = /@ (\[?[a-z_]*\]?) \(([a-z]*\[?\]?)\) ?(.*)/iu;
     const groups = line.match(lineRegex);
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid parameter`);
