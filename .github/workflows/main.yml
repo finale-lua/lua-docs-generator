@@ -30,6 +30,7 @@ jobs:
       - run: npx pnpm i
       - run: npm run build
       - name: Commit & Push changes
-        uses: actions-js/push@master
+        uses: actions-js/push@v1.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'main'
