@@ -3,7 +3,7 @@ import { isModuleName, parseModuleName } from './module-name'
 import { isOutput, parseOutput } from './outputs'
 import { isParameter, parseParameter } from './parameters'
 
-type CurrentBlock = 'markdown' | 'parameter' | 'output' | 'header' | 'module-name'
+type CurrentBlock = 'markdown' | 'parameter' | 'output' | 'header' | 'module-name' | 'blank-line'
 type HeaderName = string | undefined
 type ParsedMarkdown = {
     markdown: string
@@ -13,6 +13,7 @@ type ParsedMarkdown = {
 
 const createParameter = (line: string, currentBlock: CurrentBlock): string[] => {
     const output: string[] = []
+    if (currentBlock !== 'blank-line' && currentBlock !== 'parameter') output.push('')
     if (currentBlock !== 'parameter')
         output.push('| Input | Type | Description |', '| --- | --- | --- |')
     output.push(parseParameter(line))
@@ -21,6 +22,7 @@ const createParameter = (line: string, currentBlock: CurrentBlock): string[] => 
 
 const createOutput = (line: string, currentBlock: CurrentBlock): string[] => {
     const output: string[] = []
+    if (currentBlock !== 'blank-line' && currentBlock !== 'output') output.push('')
     if (currentBlock !== 'output') output.push('| Output type | Description |', '| --- | --- |')
     output.push(parseOutput(line))
     return output
@@ -51,7 +53,8 @@ export const parseMarkdown = (markdown: string[], moduleName?: string): ParsedMa
             currentBlock = 'module-name'
         } else {
             output.push(line)
-            currentBlock = 'markdown'
+            if (line === '') currentBlock = 'blank-line'
+            else currentBlock = 'markdown'
         }
     })
 

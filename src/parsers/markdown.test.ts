@@ -48,10 +48,8 @@ it('parses markdown with defined parameters and outputs', () => {
     expect(
         parseMarkdown([
             'A description of how the code works',
-            '',
             '@ first (string) Text of the first parameter',
             '@ [optional] (any) Optional parameters to be called whatever',
-            '',
             ': (number) Number of whatever is done or nil if an error occurred',
         ])
     ).toMatchObject({
