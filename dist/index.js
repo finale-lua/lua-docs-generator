@@ -3844,7 +3844,8 @@ const parseFile = (inputFile, outputFile) => {
         line = liner.next();
     }
     const finalOutput = createFinalOutput(moduleDefinition, output, headers);
-    writeOutputToFile(finalOutput, outputFile);
+    if (finalOutput !== '')
+        writeOutputToFile(finalOutput, outputFile);
     return finalOutput;
 };
 exports.parseFile = parseFile;
@@ -4001,7 +4002,7 @@ const parseOutput = (line) => {
     if (!groups)
         throw new Error(`Line "${line}" does not define a valid output`);
     const [, type, description] = groups;
-    const parsedType = `\`${type}\``;
+    const parsedType = `\`${type.replace(/\|/gu, '\\|')}\``;
     const parsedDescription = description;
     return `| ${parsedType} | ${parsedDescription} |`;
 };
@@ -4032,7 +4033,7 @@ const parseParameter = (line) => {
     const parsedName = name.startsWith('[')
         ? `\`${name.replace(/(\[|\])/gu, '')}\` (optional)`
         : `\`${name}\``;
-    const parsedType = `\`${type}\``;
+    const parsedType = `\`${type.replace(/\|/gu, '\\|')}\``;
     const parsedDescription = description;
     return `| ${parsedName} | ${parsedType} | ${parsedDescription} |`;
 };
