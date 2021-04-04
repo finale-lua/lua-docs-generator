@@ -61,7 +61,7 @@ describe('parses parameters', () => {
     })
     it('parses parameters with multiple types', () => {
         expect(parseParameter('-- @ first (string[] | number[])')).toBe(
-            '| `first` | `string[] | number[]` |  |'
+            '| `first` | `string[] \\| number[]` |  |'
         )
     })
 })

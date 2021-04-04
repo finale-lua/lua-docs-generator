@@ -54,7 +54,7 @@ describe('parses parameters', () => {
     it('parses outputs with multiple types', () => {
         expect(
             parseOutput(': (string | nill) the first font info that was stripped or nil if none')
-        ).toBe('| `string | nill` | the first font info that was stripped or nil if none |')
+        ).toBe('| `string \\| nill` | the first font info that was stripped or nil if none |')
     })
     it('parses multiple outputs', () => {
         expect(

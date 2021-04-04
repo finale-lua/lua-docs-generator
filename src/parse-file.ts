@@ -101,7 +101,7 @@ export const parseFile = (inputFile: string, outputFile?: string): string => {
 
     const finalOutput = createFinalOutput(moduleDefinition, output, headers)
 
-    writeOutputToFile(finalOutput, outputFile)
+    if (finalOutput !== '') writeOutputToFile(finalOutput, outputFile)
 
     return finalOutput
 }

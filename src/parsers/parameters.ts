@@ -15,7 +15,7 @@ export const parseParameter = (line: string): string => {
     const parsedName = name.startsWith('[')
         ? `\`${name.replace(/(\[|\])/gu, '')}\` (optional)`
         : `\`${name}\``
-    const parsedType = `\`${type}\``
+    const parsedType = `\`${type.replace(/\|/gu, '\\|')}\``
     const parsedDescription = description
 
     return `| ${parsedName} | ${parsedType} | ${parsedDescription} |`

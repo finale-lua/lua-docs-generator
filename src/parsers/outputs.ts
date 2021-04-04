@@ -12,7 +12,7 @@ export const parseOutput = (line: string): string => {
 
     const [, type, description] = groups
 
-    const parsedType = `\`${type}\``
+    const parsedType = `\`${type.replace(/\|/gu, '\\|')}\``
     const parsedDescription = description
 
     return `| ${parsedType} | ${parsedDescription} |`
