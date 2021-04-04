@@ -1,5 +1,5 @@
-- [chromatic_transposition](chromatic_transposition)
-- [diatonic_transposition](diatonic_transposition)
+- [chromatic_transposition](#chromatic_transposition)
+- [diatonic_transposition](#diatonic_transposition)
 
 ## chromatic_transposition
 

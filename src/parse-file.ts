@@ -16,7 +16,7 @@ const createFinalOutput = (
     headers: string[]
 ): string => {
     const tableOfContents: string = headers
-        .map((header) => `- [${header}](${slugify(header)})`)
+        .map((header) => `- [${header}](#${slugify(header)})`)
         .join('\n')
 
     const sections: string[] = []

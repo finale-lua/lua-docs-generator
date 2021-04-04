@@ -2,8 +2,8 @@
 
 An overall description of the module.
 
-- [chromatic_transposition](chromatic_transposition)
-- [diatonic_transposition](diatonic_transposition)
+- [chromatic_transposition](#chromatic_transposition)
+- [diatonic_transposition](#diatonic_transposition)
 
 ## chromatic_transposition
 
