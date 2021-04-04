@@ -6,10 +6,13 @@ describe('checks if line defines a return value', () => {
             true
         )
     })
-    it('identifies and output starting with a single line comment', () => {
+    it('identifies an output starting with a single line comment', () => {
         expect(
             isOutput('--: (number) Number of whatever is done or nil if an error occurred')
         ).toBe(true)
+    })
+    it('identifies an output without a description', () => {
+        expect(isOutput('--: (number)')).toBe(true)
     })
     it('returns false for parameters', () => {
         expect(isOutput('@ first (string) Text of the first parameter')).toBe(false)
@@ -41,5 +44,8 @@ describe('parses parameters', () => {
         expect(
             parseOutput('--: (number) Number of whatever is done or nil if an error occurred')
         ).toBe('| `number` | Number of whatever is done or nil if an error occurred |')
+    })
+    it('parses outputs without a description', () => {
+        expect(parseOutput('--: (number)')).toBe('| `number` |  |')
     })
 })

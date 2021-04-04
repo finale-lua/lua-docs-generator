@@ -9,6 +9,9 @@ describe('checks if line defines a parameter', () => {
             true
         )
     })
+    it('identifies parameters without a description', () => {
+        expect(isParameter('@ first (string)')).toBe(true)
+    })
     it('identifies parameters that start with single line comments', () => {
         expect(isParameter('-- @ first (string) Text of the first parameter')).toBe(true)
     })
@@ -52,5 +55,8 @@ describe('parses parameters', () => {
         expect(parseParameter('-- @ first (string[]) Text of the first parameter')).toBe(
             '| `first` | `string[]` | Text of the first parameter |'
         )
+    })
+    it('parses parameters without a description', () => {
+        expect(parseParameter('-- @ first (string[])')).toBe('| `first` | `string[]` |  |')
     })
 })
