@@ -87,16 +87,17 @@ export const parseFile = (inputFile: string, outputFile?: string): string => {
                 output
             )
 
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             isCurrentlyMarkdown = newData.isCurrentlyMarkdown
-
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             moduleName = newData.moduleName
-
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             currentSegment = newData.currentSegment
-
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             headers = newData.headers
-
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             moduleDefinition = newData.moduleDefinition
-
+            // eslint-disable-next-line prefer-destructuring -- won't work in this case
             output = newData.output
         }
 
