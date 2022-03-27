@@ -1,4 +1,4 @@
-import { isParameter, parseParameter } from './parameters'
+import { createParameterMarkdown, isParameter, parseParameter } from './parameters'
 
 describe('checks if line defines a parameter', () => {
     it('identifies basic parameters', () => {
@@ -35,33 +35,99 @@ describe('checks if line defines a parameter', () => {
     })
 })
 
+// eslint-disable-next-line max-lines-per-function -- individual tests are short
 describe('parses parameters', () => {
     it('parses basic parameters', () => {
-        expect(parseParameter('@ first (string) Text of the first parameter')).toBe(
-            '| `first` | `string` | Text of the first parameter |'
-        )
+        expect(parseParameter('@ first (string) Text of the first parameter')).toStrictEqual({
+            name: 'first',
+            type: 'string',
+            isOptional: false,
+            description: 'Text of the first parameter',
+        })
     })
     it('parses optional parameters', () => {
-        expect(parseParameter('@ [optional] (any) Optional parameters to be called whatever')).toBe(
-            '| `optional` (optional) | `any` | Optional parameters to be called whatever |'
-        )
+        expect(
+            parseParameter('@ [optional] (any) Optional parameters to be called whatever')
+        ).toStrictEqual({
+            name: 'optional',
+            type: 'any',
+            isOptional: true,
+            description: 'Optional parameters to be called whatever',
+        })
     })
     it('parses parameters that start with single line comments', () => {
-        expect(parseParameter('-- @ first (string) Text of the first parameter')).toBe(
-            '| `first` | `string` | Text of the first parameter |'
-        )
+        expect(parseParameter('-- @ first (string) Text of the first parameter')).toStrictEqual({
+            name: 'first',
+            type: 'string',
+            isOptional: false,
+            description: 'Text of the first parameter',
+        })
     })
     it('parses array types', () => {
-        expect(parseParameter('-- @ first (string[]) Text of the first parameter')).toBe(
-            '| `first` | `string[]` | Text of the first parameter |'
-        )
+        expect(parseParameter('-- @ first (string[]) Text of the first parameter')).toStrictEqual({
+            name: 'first',
+            type: 'string[]',
+            isOptional: false,
+            description: 'Text of the first parameter',
+        })
     })
     it('parses parameters without a description', () => {
-        expect(parseParameter('-- @ first (string[])')).toBe('| `first` | `string[]` |  |')
+        expect(parseParameter('-- @ first (string[])')).toStrictEqual({
+            name: 'first',
+            type: 'string[]',
+            isOptional: false,
+            description: '',
+        })
     })
     it('parses parameters with multiple types', () => {
-        expect(parseParameter('-- @ first (string[] | number[])')).toBe(
-            '| `first` | `string[] \\| number[]` |  |'
-        )
+        expect(parseParameter('-- @ first (string[] | number[])')).toStrictEqual({
+            name: 'first',
+            type: 'string[] | number[]',
+            isOptional: false,
+            description: '',
+        })
+    })
+})
+
+describe('create parameter markdown', () => {
+    it('required', () => {
+        expect(
+            createParameterMarkdown({
+                name: 'arg',
+                type: 'string',
+                isOptional: false,
+                description: 'Text of the first parameter',
+            })
+        ).toBe('| `arg` | `string` | Text of the first parameter |')
+    })
+    it('optional', () => {
+        expect(
+            createParameterMarkdown({
+                name: 'arg',
+                type: 'string',
+                isOptional: true,
+                description: 'Text of the first parameter',
+            })
+        ).toBe('| `arg` (optional) | `string` | Text of the first parameter |')
+    })
+    it('no description', () => {
+        expect(
+            createParameterMarkdown({
+                name: 'arg',
+                type: 'string',
+                isOptional: false,
+                description: '',
+            })
+        ).toBe('| `arg` | `string` |  |')
+    })
+    it('multiple types', () => {
+        expect(
+            createParameterMarkdown({
+                name: 'arg',
+                type: 'string | number',
+                isOptional: false,
+                description: 'Text of the first parameter',
+            })
+        ).toBe('| `arg` | `string \\| number` | Text of the first parameter |')
     })
 })

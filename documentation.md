@@ -18,7 +18,7 @@ The `$module` tells the parser that the file defines a module. It will also prep
 
 ```lua
 --[[
-% chromatic_transposition(note, interval, alteration, simplify)
+% chromatic_transposition
 --]]
 ```
 
@@ -28,9 +28,11 @@ The `$module` tells the parser that the file defines a module. It will also prep
 ## chromatic_transposition
 
 ```
-transposition.chromatic_transposition(note, interval, alteration, simplify)
+transposition.chromatic_transposition()
 ```
 ````
+
+> **Note**: the arguments will be automatically added to the call signature
 
 ## Table of contents
 
@@ -63,7 +65,7 @@ To define a function, just use the `%` character at the start of a line.
 
 ```lua
 --[[
-% chromatic_transposition(note, interval, alteration, simplify)
+% chromatic_transposition
 --]]
 ```
 
@@ -111,7 +113,7 @@ An overall description of the module.
 local transposition = {}
 
 --[[
-% chromatic_transposition(note, interval, alteration, simplify)
+% chromatic_transposition
 
 A description of how the code works
 
@@ -121,12 +123,12 @@ A description of how the code works
 : (number) Number of whatever is done or nil if an error occurred
 --]]
 
-function transposition.chromatic_transposition(note, interval, alteration, simplify)
+function transposition.chromatic_transposition(first, optional)
     -- does something
 end
 
 --[[
-% diatonic_transposition(note, interval, simplify)
+% diatonic_transposition
 
 Another a description of how the code works
 
@@ -135,7 +137,7 @@ Another a description of how the code works
 : (boolean) Whether or not the operation succeeded
 --]]
 
-function transposition.diatonic_transposition(note, interval, simplify)
+function transposition.diatonic_transposition(note)
     -- does something
 end
 
@@ -155,33 +157,33 @@ An overall description of the module.
 ## chromatic_transposition
 
 ```lua
-transposition.chromatic_transposition(note, interval, alteration, simplify)
+transposition.chromatic_transposition(first, optional)
 ```
 
 A description of how the code works
 
 | Input | Type | Description |
-| --- | --- | --- |
+| ----- | ---- | ----------- |
 | `first` | `string` | Text of the first parameter |
 | `optional` (optional) | `any` | Optional parameters to be called whatever |
 
-| Output type | Description |
-| --- | --- |
+| Return type | Description |
+| ----------- | ----------- |
 | `number` | Number of whatever is done or nil if an error occurred |
 
 ## diatonic_transposition
 
 ```lua
-transposition.diatonic_transposition(note, interval, simplify)
+transposition.diatonic_transposition(note)
 ```
 
 Another a description of how the code works
 
 | Input | Type | Description |
-| --- | --- | --- |
+| ----- | ---- | ----------- |
 | `note` | `FCNoteEntry` | This is the input note |
 
-| Output type | Description |
-| --- | --- |
+| Return type | Description |
+| ----------- | ----------- |
 | `boolean` | Whether or not the operation succeeded |
 ````

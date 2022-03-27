@@ -1,163 +1,236 @@
-import { parseMarkdown } from './markdown'
+import { generateMethodMarkdown } from './markdown'
 
-it('parses basic markdown', () => {
-    expect(parseMarkdown(['A **description** of how the code works'])).toMatchObject({
-        markdown: 'A **description** of how the code works',
-    })
-})
-
-it('parses markdown with defined inputs', () => {
+it('generates markdown from method title', () => {
     expect(
-        parseMarkdown([
-            'A description of how the code works',
-            '',
-            '@ first (string) Text of the first parameter',
-            '@ [optional] (any) Optional parameters to be called whatever',
-        ])
-    ).toMatchObject({
-        markdown: [
-            'A description of how the code works',
-            '',
-            '| Input | Type | Description |',
-            '| --- | --- | --- |',
-            '| `first` | `string` | Text of the first parameter |',
-            '| `optional` (optional) | `any` | Optional parameters to be called whatever |',
-        ].join('\n'),
-    })
-})
-
-it('parses markdown with defined outputs', () => {
-    expect(
-        parseMarkdown([
-            'A description of how the code works',
-            '',
-            ': (number) Number of whatever is done or nil if an error occurred',
-        ])
-    ).toMatchObject({
-        markdown: [
-            'A description of how the code works',
-            '',
-            '| Output type | Description |',
-            '| --- | --- |',
-            '| `number` | Number of whatever is done or nil if an error occurred |',
-        ].join('\n'),
-    })
-})
-
-it('parses markdown with defined parameters and outputs', () => {
-    expect(
-        parseMarkdown([
-            'A description of how the code works',
-            '@ first (string) Text of the first parameter',
-            '@ [optional] (any) Optional parameters to be called whatever',
-            ': (number) Number of whatever is done or nil if an error occurred',
-        ])
-    ).toMatchObject({
-        markdown: [
-            'A description of how the code works',
-            '',
-            '| Input | Type | Description |',
-            '| --- | --- | --- |',
-            '| `first` | `string` | Text of the first parameter |',
-            '| `optional` (optional) | `any` | Optional parameters to be called whatever |',
-            '',
-            '| Output type | Description |',
-            '| --- | --- |',
-            '| `number` | Number of whatever is done or nil if an error occurred |',
-        ].join('\n'),
-    })
-})
-
-it('parses the header', () => {
-    expect(
-        parseMarkdown([
-            '% chromatic_transposition(note, interval, alteration, simplify)',
-            '',
-            'And a description of how the code works',
-        ])
-    ).toMatchObject({
+        generateMethodMarkdown({
+            name: 'chromatic_transposition',
+            description: [],
+            parameters: [],
+        })
+    ).toStrictEqual({
         markdown: [
             '## chromatic_transposition',
             '',
             '```lua',
-            'chromatic_transposition(note, interval, alteration, simplify)',
+            'chromatic_transposition()',
             '```',
-            '',
-            'And a description of how the code works',
         ].join('\n'),
         header: 'chromatic_transposition',
+        moduleDefinition: false,
     })
 })
 
-it('parses the header with module name when defined', () => {
+it('generates markdown from method title and module name', () => {
     expect(
-        parseMarkdown(
-            [
-                '% chromatic_transposition(note, interval, alteration, simplify)',
-                '',
-                'And a description of how the code works',
-            ],
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: [],
+                parameters: [],
+            },
             'transposition'
         )
-    ).toMatchObject({
+    ).toStrictEqual({
         markdown: [
             '## chromatic_transposition',
             '',
             '```lua',
-            'transposition.chromatic_transposition(note, interval, alteration, simplify)',
+            'transposition.chromatic_transposition()',
             '```',
-            '',
-            'And a description of how the code works',
         ].join('\n'),
         header: 'chromatic_transposition',
+        moduleDefinition: false,
     })
 })
 
-it('parses returns "undefined" when header is not defined', () => {
-    expect(parseMarkdown(['A description of how the code works'])).toMatchObject({
-        markdown: 'A description of how the code works',
-        // eslint-disable-next-line no-undefined -- required algorithmically
-        header: undefined,
-    })
-})
-
-it('parses the module name correctly', () => {
-    expect(parseMarkdown(['$module Transposition'])).toMatchObject({
-        markdown: '# Transposition',
-    })
-})
-
-it('can parse everything simultaneously', () => {
+it('generates markdown from method with description', () => {
     expect(
-        parseMarkdown([
-            '% chromatic_transposition(note, interval, alteration, simplify)',
-            '',
-            'And a description of how the code works',
-            '',
-            '@ first (string) Text of the first parameter',
-            '@ [optional] (any) Optional parameters to be called whatever',
-            '',
-            ': (number) Number of whatever is done or nil if an error occurred',
-        ])
-    ).toMatchObject({
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: ['I am a description', '', 'I span two paragraphs'],
+                parameters: [],
+            },
+            'transposition'
+        )
+    ).toStrictEqual({
         markdown: [
             '## chromatic_transposition',
             '',
             '```lua',
-            'chromatic_transposition(note, interval, alteration, simplify)',
+            'transposition.chromatic_transposition()',
             '```',
             '',
-            'And a description of how the code works',
+            'I am a description',
+            '',
+            'I span two paragraphs',
+        ].join('\n'),
+        header: 'chromatic_transposition',
+        moduleDefinition: false,
+    })
+})
+
+it('removes excess empty lines from description', () => {
+    expect(
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: [
+                    '',
+                    '',
+                    '',
+                    '',
+                    'I am a description',
+                    '',
+                    '',
+                    'I span two paragraphs',
+                    'continuation of paragraph',
+                    '',
+                    '',
+                    '',
+                    'another paragraph',
+                    '',
+                ],
+                parameters: [],
+            },
+            'transposition'
+        )
+    ).toStrictEqual({
+        markdown: [
+            '## chromatic_transposition',
+            '',
+            '```lua',
+            'transposition.chromatic_transposition()',
+            '```',
+            '',
+            'I am a description',
+            '',
+            'I span two paragraphs',
+            'continuation of paragraph',
+            '',
+            'another paragraph',
+        ].join('\n'),
+        header: 'chromatic_transposition',
+        moduleDefinition: false,
+    })
+})
+
+it('generates markdown from method with parameters', () => {
+    expect(
+        generateMethodMarkdown({
+            name: 'chromatic_transposition',
+            description: [],
+            parameters: [
+                {
+                    name: 'arg1',
+                    type: 'string',
+                    isOptional: false,
+                    description: 'Text of the first parameter',
+                },
+                {
+                    name: 'arg2',
+                    type: 'string',
+                    isOptional: true,
+                    description: 'Text of the first parameter',
+                },
+            ],
+        })
+    ).toStrictEqual({
+        markdown: [
+            '## chromatic_transposition',
+            '',
+            '```lua',
+            'chromatic_transposition(arg1, arg2)',
+            '```',
             '',
             '| Input | Type | Description |',
-            '| --- | --- | --- |',
-            '| `first` | `string` | Text of the first parameter |',
-            '| `optional` (optional) | `any` | Optional parameters to be called whatever |',
-            '',
-            '| Output type | Description |',
-            '| --- | --- |',
-            '| `number` | Number of whatever is done or nil if an error occurred |',
+            '| ----- | ---- | ----------- |',
+            '| `arg1` | `string` | Text of the first parameter |',
+            '| `arg2` (optional) | `string` | Text of the first parameter |',
         ].join('\n'),
         header: 'chromatic_transposition',
+        moduleDefinition: false,
+    })
+})
+
+it('generates markdown from method with return value', () => {
+    expect(
+        generateMethodMarkdown({
+            name: 'chromatic_transposition',
+            description: [],
+            parameters: [],
+            returnValue: {
+                type: 'string',
+                description: 'Text of the return value',
+            },
+        })
+    ).toStrictEqual({
+        markdown: [
+            '## chromatic_transposition',
+            '',
+            '```lua',
+            'chromatic_transposition()',
+            '```',
+            '',
+            '| Return type | Description |',
+            '| ----------- | ----------- |',
+            '| `string` | Text of the return value |',
+        ].join('\n'),
+        header: 'chromatic_transposition',
+        moduleDefinition: false,
+    })
+})
+
+// eslint-disable-next-line max-lines-per-function -- really large objects, simple function
+it('generates markdown from method with everything', () => {
+    expect(
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: ['I am a description', '', 'I span two paragraphs'],
+                parameters: [
+                    {
+                        name: 'arg1',
+                        type: 'string',
+                        isOptional: false,
+                        description: 'Text of the first parameter',
+                    },
+                    {
+                        name: 'arg2',
+                        type: 'string',
+                        isOptional: true,
+                        description: 'Text of the first parameter',
+                    },
+                ],
+                returnValue: {
+                    type: 'string',
+                    description: 'Text of the return value',
+                },
+            },
+            'transposition'
+        )
+    ).toStrictEqual({
+        markdown: [
+            '## chromatic_transposition',
+            '',
+            '```lua',
+            'transposition.chromatic_transposition(arg1, arg2)',
+            '```',
+            '',
+            'I am a description',
+            '',
+            'I span two paragraphs',
+            '',
+            '| Input | Type | Description |',
+            '| ----- | ---- | ----------- |',
+            '| `arg1` | `string` | Text of the first parameter |',
+            '| `arg2` (optional) | `string` | Text of the first parameter |',
+            '',
+            '| Return type | Description |',
+            '| ----------- | ----------- |',
+            '| `string` | Text of the return value |',
+        ].join('\n'),
+        header: 'chromatic_transposition',
+        moduleDefinition: false,
     })
 })

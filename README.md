@@ -30,7 +30,7 @@ For more details, see [documentation.md](./documentation.md). For more examples 
 ## Action Inputs
 
 | Name | Description |
-| --- | --- |
+| ----------- | ----------- |
 | `input` (required) | The folder of the lua scripts |
 | `output` (required) | The folder where to save the documentation |
 

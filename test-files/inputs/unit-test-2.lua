@@ -1,7 +1,7 @@
 local transposition = {}
 
 --[[
-% chromatic_transposition(note, interval, alteration, simplify)
+% chromatic_transposition
 
 A description of how the code works
 
@@ -11,12 +11,12 @@ A description of how the code works
 : (number) Number of whatever is done or nil if an error occurred
 --]]
 
-function transposition.chromatic_transposition(note, interval, alteration, simplify)
+function transposition.chromatic_transposition(first, optional)
     -- does something
 end
 
 --[[
-% diatonic_transposition(note, interval, simplify)
+% diatonic_transposition(incorrectArg)
 
 Another a description of how the code works
 
@@ -25,7 +25,7 @@ Another a description of how the code works
 : (boolean) Whether or not the operation succeeded
 --]]
 
-function transposition.diatonic_transposition(note, interval, simplify)
+function transposition.diatonic_transposition(note)
     -- does something
 end
 

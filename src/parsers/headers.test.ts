@@ -11,6 +11,12 @@ describe('checks if line is a header', () => {
             true
         )
     })
+    it('identifies a header without arguments listed', () => {
+        expect(isHeader('-- % chromatic_transposition')).toBe(true)
+    })
+    it('identifies a header with empty call signature', () => {
+        expect(isHeader('-- % chromatic_transposition()')).toBe(true)
+    })
     it('returns false for parameters', () => {
         expect(isHeader('@ first (string) Text of the first parameter')).toBe(false)
         expect(isHeader('@ [optional] (any) Optional parameters to the called whatever')).toBe(
@@ -37,34 +43,14 @@ describe('checks if line is a header', () => {
 
 describe('parses header', () => {
     it('parses basic header', () => {
-        expect(
-            parseHeader('% chromatic_transposition(note, interval, alteration, simplify)')
-        ).toMatchObject({
-            name: 'chromatic_transposition',
-            markdown: [
-                '## chromatic_transposition',
-                '',
-                '```lua',
-                'chromatic_transposition(note, interval, alteration, simplify)',
-                '```',
-            ].join('\n'),
-        })
+        expect(parseHeader('% chromatic_transposition(note, interval, alteration, simplify)')).toBe(
+            'chromatic_transposition'
+        )
     })
-    it('parses header with module prefix', () => {
-        expect(
-            parseHeader(
-                '% chromatic_transposition(note, interval, alteration, simplify)',
-                'transposition'
-            )
-        ).toMatchObject({
-            name: 'chromatic_transposition',
-            markdown: [
-                '## chromatic_transposition',
-                '',
-                '```lua',
-                'transposition.chromatic_transposition(note, interval, alteration, simplify)',
-                '```',
-            ].join('\n'),
-        })
+    it('parses header without call signature', () => {
+        expect(parseHeader('% chromatic_transposition')).toBe('chromatic_transposition')
+    })
+    it('parses header without arguments', () => {
+        expect(parseHeader('% chromatic_transposition()')).toBe('chromatic_transposition')
     })
 })

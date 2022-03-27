@@ -5,6 +5,11 @@ export type ParsedModuleName = {
     markdown: string
 }
 
+export type Module = {
+    name?: ParsedModuleName
+    description: string[]
+}
+
 export const isModuleName = (line: string): boolean => {
     const groups = line.match(moduleRegex)
     return Boolean(groups)
@@ -23,4 +28,21 @@ export const parseModuleName = (line: string): ParsedModuleName => {
         .join('_')
 
     return { name: parsedName, markdown: `# ${name}` }
+}
+
+export const parseModule = (lines: string[]): Module | undefined => {
+    const parsedModule: Module = {
+        description: [],
+    }
+    for (const line of lines) {
+        if (isModuleName(line)) parsedModule.name = parseModuleName(line)
+        else parsedModule.description.push(line)
+    }
+
+    // eslint-disable-next-line no-undefined -- needed algorithmically
+    return parsedModule.name ? parsedModule : undefined
+}
+
+export const isCommentModule = (lines: string[]): boolean => {
+    return lines.some((line) => isModuleName(line))
 }

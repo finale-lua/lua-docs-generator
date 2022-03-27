@@ -1,4 +1,4 @@
-import { isModuleName, parseModuleName } from './module-name'
+import { isModuleName, parseModuleName } from './module'
 
 describe('checks if line defines the module name', () => {
     it('identifies an module name', () => {
