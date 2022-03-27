@@ -1,7 +1,7 @@
 import fs from 'fs-extra'
 import ReadLines from 'n-readlines'
+// eslint-disable-next-line import/order -- auto formatting
 import slugify from 'slugify'
-
 import { parseMarkdown } from './parsers/markdown'
 import { isModuleName, parseModuleName } from './parsers/module-name'
 
@@ -86,14 +86,18 @@ export const parseFile = (inputFile: string, outputFile?: string): string => {
                 moduleDefinition,
                 output
             )
-            /* eslint-disable prefer-destructuring -- won't work in this case */
+
             isCurrentlyMarkdown = newData.isCurrentlyMarkdown
+
             moduleName = newData.moduleName
+
             currentSegment = newData.currentSegment
+
             headers = newData.headers
+
             moduleDefinition = newData.moduleDefinition
+
             output = newData.output
-            /* eslint-enable prefer-destructuring -- won't work in this case */
         }
 
         line = liner.next()
