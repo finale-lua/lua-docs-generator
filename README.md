@@ -10,7 +10,7 @@ For documenting your lua scripts, just add multiline comments. All valid markdow
 
 ```lua
 --[[
-% chromatic_transposition(note, interval, alteration, simplify)
+% chromatic_transposition
 
 A description of how the code works
 
