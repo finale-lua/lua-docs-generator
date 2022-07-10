@@ -6,6 +6,7 @@ it('generates markdown from method title', () => {
             name: 'chromatic_transposition',
             description: [],
             parameters: [],
+            returnValues: [],
         })
     ).toStrictEqual({
         markdown: [
@@ -27,6 +28,7 @@ it('generates markdown from method title and module name', () => {
                 name: 'chromatic_transposition',
                 description: [],
                 parameters: [],
+                returnValues: [],
             },
             'transposition'
         )
@@ -50,6 +52,7 @@ it('generates markdown from method with description', () => {
                 name: 'chromatic_transposition',
                 description: ['I am a description', '', 'I span two paragraphs'],
                 parameters: [],
+                returnValues: [],
             },
             'transposition'
         )
@@ -92,6 +95,7 @@ it('removes excess empty lines from description', () => {
                     '',
                 ],
                 parameters: [],
+                returnValues: [],
             },
             'transposition'
         )
@@ -134,6 +138,7 @@ it('generates markdown from method with parameters', () => {
                     description: 'Text of the first parameter',
                 },
             ],
+            returnValues: [],
         })
     ).toStrictEqual({
         markdown: [
@@ -159,10 +164,12 @@ it('generates markdown from method with return value', () => {
             name: 'chromatic_transposition',
             description: [],
             parameters: [],
-            returnValue: {
-                type: 'string',
-                description: 'Text of the return value',
-            },
+            returnValues: [
+                {
+                    type: 'string',
+                    description: 'Text of the return value',
+                },
+            ],
         })
     ).toStrictEqual({
         markdown: [
@@ -202,10 +209,16 @@ it('generates markdown from method with everything', () => {
                         description: 'Text of the first parameter',
                     },
                 ],
-                returnValue: {
-                    type: 'string',
-                    description: 'Text of the return value',
-                },
+                returnValues: [
+                    {
+                        type: 'string',
+                        description: 'Text of the return value',
+                    },
+                    {
+                        type: 'string',
+                        description: 'Text of the second return value',
+                    },
+                ],
             },
             'transposition'
         )
@@ -229,6 +242,7 @@ it('generates markdown from method with everything', () => {
             '| Return type | Description |',
             '| ----------- | ----------- |',
             '| `string` | Text of the return value |',
+            '| `string` | Text of the second return value |',
         ].join('\n'),
         header: 'chromatic_transposition',
         moduleDefinition: false,
@@ -255,11 +269,13 @@ describe('TOC markdown', () => {
                         description: "I'm a description",
                     },
                 ],
+                returnValues: [],
             },
             {
                 name: 'Hello_World',
                 description: [],
                 parameters: [],
+                returnValues: [],
             },
         ]
         expect(generateTocMarkdown(toc)).toBe(

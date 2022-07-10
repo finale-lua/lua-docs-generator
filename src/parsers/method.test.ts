@@ -16,6 +16,7 @@ it('parses module with title', () => {
         name: 'chromatic_transposition',
         description: [],
         parameters: [],
+        returnValues: [],
     })
 })
 
@@ -33,6 +34,7 @@ it('parses module with description', () => {
         name: 'chromatic_transposition',
         description: ['', 'this is a description', 'another line', '', 'another paragraph'],
         parameters: [],
+        returnValues: [],
     })
 })
 
@@ -60,6 +62,7 @@ it('parses module with parameters', () => {
                 description: 'Optional parameters to be called whatever',
             },
         ],
+        returnValues: [],
     })
 })
 
@@ -73,10 +76,35 @@ it('parses module with return value', () => {
         name: 'chromatic_transposition',
         description: [],
         parameters: [],
-        returnValue: {
-            type: 'number',
-            description: 'Number of whatever is done or nil if an error occurred',
-        },
+        returnValues: [
+            {
+                type: 'number',
+                description: 'Number of whatever is done or nil if an error occurred',
+            },
+        ],
+    })
+})
+it('parses module with multiple return values', () => {
+    expect(
+        parseMethod([
+            '% chromatic_transposition',
+            ': (number) Number of whatever is done or nil if an error occurred',
+            ': (string) The error string or nil if no error occurred',
+        ])
+    ).toStrictEqual({
+        name: 'chromatic_transposition',
+        description: [],
+        parameters: [],
+        returnValues: [
+            {
+                type: 'number',
+                description: 'Number of whatever is done or nil if an error occurred',
+            },
+            {
+                type: 'string',
+                description: 'The error string or nil if no error occurred',
+            },
+        ],
     })
 })
 
@@ -116,9 +144,11 @@ it('parses module with everything out of order', () => {
                 description: 'Optional parameters to be called whatever',
             },
         ],
-        returnValue: {
-            type: 'number',
-            description: 'Number of whatever is done or nil if an error occurred',
-        },
+        returnValues: [
+            {
+                type: 'number',
+                description: 'Number of whatever is done or nil if an error occurred',
+            },
+        ],
     })
 })

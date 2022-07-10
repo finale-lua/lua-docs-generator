@@ -8,7 +8,7 @@ export type Method = {
     name: string
     description: string[]
     parameters: Parameter[]
-    returnValue?: ReturnValue
+    returnValues: ReturnValue[]
 }
 
 export const isCommentMethod = (lines: string[]): boolean => {
@@ -20,11 +20,12 @@ export const parseMethod = (lines: string[]): Method | undefined => {
         name: '',
         description: [],
         parameters: [],
+        returnValues: [],
     }
     for (const line of lines) {
         if (isHeader(line)) method.name = parseHeader(line)
         else if (isParameter(line)) method.parameters.push(parseParameter(line))
-        else if (isReturnValue(line)) method.returnValue = parseReturnValue(line)
+        else if (isReturnValue(line)) method.returnValues.push(parseReturnValue(line))
         else method.description.push(line)
     }
 

@@ -33,11 +33,13 @@ export const generateMethodMarkdown = (method: Method, moduleName?: string): Par
         lines.push('| ----- | ---- | ----------- |')
         lines.push(...method.parameters.map((parameter) => createParameterMarkdown(parameter)))
     }
-    if (method.returnValue) {
+    if (method.returnValues.length > 0) {
         lines.push('')
         lines.push('| Return type | Description |')
         lines.push('| ----------- | ----------- |')
-        lines.push(createReturnMarkdown(method.returnValue))
+        method.returnValues.forEach((returnValue) => {
+            lines.push(createReturnMarkdown(returnValue))
+        })
     }
 
     return {
