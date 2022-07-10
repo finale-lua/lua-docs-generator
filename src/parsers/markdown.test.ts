@@ -279,7 +279,9 @@ describe('TOC markdown', () => {
             },
         ]
         expect(generateTocMarkdown(toc)).toBe(
-            ['[hello_world(arg1, arg2)](#hello_world)', '[Hello_World()](#hello_world)'].join('\n')
+            ['- [hello_world(arg1, arg2)](#hello_world)', '- [Hello_World()](#hello_world)'].join(
+                '\n'
+            )
         )
     })
 })

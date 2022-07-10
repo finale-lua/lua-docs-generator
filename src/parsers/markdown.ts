@@ -64,7 +64,7 @@ export const generateTocMarkdown = (methods: Method[]): string => {
     return methods
         .map(
             (method) =>
-                `[${method.name}(${method.parameters
+                `- [${method.name}(${method.parameters
                     .map((parameter) => parameter.name)
                     .join(', ')})](#${slugify(method.name.toLowerCase())})`
         )

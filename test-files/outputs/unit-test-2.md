@@ -1,7 +1,7 @@
 ## Functions
 
-[chromatic_transposition(first, optional)](#chromatic_transposition)
-[diatonic_transposition(note)](#diatonic_transposition)
+- [chromatic_transposition(first, optional)](#chromatic_transposition)
+- [diatonic_transposition(note)](#diatonic_transposition)
 
 ### chromatic_transposition
 

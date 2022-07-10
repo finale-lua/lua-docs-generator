@@ -5141,7 +5141,7 @@ const generateModuleMarkdown = (parsedModule) => {
 exports.generateModuleMarkdown = generateModuleMarkdown;
 const generateTocMarkdown = (methods) => {
     return methods
-        .map((method) => `[${method.name}(${method.parameters
+        .map((method) => `- [${method.name}(${method.parameters
         .map((parameter) => parameter.name)
         .join(', ')})](#${(0, slugify_1.default)(method.name.toLowerCase())})`)
         .join('\n');

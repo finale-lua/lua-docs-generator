@@ -1,6 +1,6 @@
 ## Functions
 
-[chromatic_transposition(first, optional)](#chromatic_transposition)
+- [chromatic_transposition(first, optional)](#chromatic_transposition)
 
 ### chromatic_transposition
 
