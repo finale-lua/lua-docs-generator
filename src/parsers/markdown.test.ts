@@ -1,4 +1,4 @@
-import { generateMethodMarkdown } from './markdown'
+import { generateMethodMarkdown, generateTocMarkdown } from './markdown'
 
 it('generates markdown from method title', () => {
     expect(
@@ -232,5 +232,25 @@ it('generates markdown from method with everything', () => {
         ].join('\n'),
         header: 'chromatic_transposition',
         moduleDefinition: false,
+    })
+})
+
+describe('TOC markdown', () => {
+    it('parses TOC markdown', () => {
+        const toc = [
+            {
+                name: 'hello world',
+                description: [],
+                parameters: [],
+            },
+            {
+                name: 'Hello World',
+                description: [],
+                parameters: [],
+            },
+        ]
+        expect(generateTocMarkdown(toc)).toBe(
+            ['- [hello world](#hello-world)', '- [Hello World](#hello-world)'].join('\n')
+        )
     })
 })

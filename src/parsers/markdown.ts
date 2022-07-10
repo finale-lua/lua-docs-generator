@@ -59,5 +59,7 @@ export const generateModuleMarkdown = (parsedModule: Module): ParsedMarkdown => 
 }
 
 export const generateTocMarkdown = (methods: Method[]): string => {
-    return methods.map((method) => `- [${method.name}](#${slugify(method.name)})`).join('\n')
+    return methods
+        .map((method) => `- [${method.name}](#${slugify(method.name.toLowerCase())})`)
+        .join('\n')
 }
