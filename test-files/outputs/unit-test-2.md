@@ -1,7 +1,9 @@
-- [chromatic_transposition](#chromatic_transposition)
-- [diatonic_transposition](#diatonic_transposition)
+## Functions
 
-## chromatic_transposition
+[chromatic_transposition(first, optional)](#chromatic_transposition)
+[diatonic_transposition(note)](#diatonic_transposition)
+
+### chromatic_transposition
 
 ```lua
 chromatic_transposition(first, optional)
@@ -18,7 +20,7 @@ A description of how the code works
 | ----------- | ----------- |
 | `number` | Number of whatever is done or nil if an error occurred |
 
-## diatonic_transposition
+### diatonic_transposition
 
 ```lua
 diatonic_transposition(note)

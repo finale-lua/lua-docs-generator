@@ -9,7 +9,7 @@ it('generates markdown from method title', () => {
         })
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'chromatic_transposition()',
@@ -32,7 +32,7 @@ it('generates markdown from method title and module name', () => {
         )
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'transposition.chromatic_transposition()',
@@ -55,7 +55,7 @@ it('generates markdown from method with description', () => {
         )
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'transposition.chromatic_transposition()',
@@ -97,7 +97,7 @@ it('removes excess empty lines from description', () => {
         )
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'transposition.chromatic_transposition()',
@@ -137,7 +137,7 @@ it('generates markdown from method with parameters', () => {
         })
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'chromatic_transposition(arg1, arg2)',
@@ -166,7 +166,7 @@ it('generates markdown from method with return value', () => {
         })
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'chromatic_transposition()',
@@ -211,7 +211,7 @@ it('generates markdown from method with everything', () => {
         )
     ).toStrictEqual({
         markdown: [
-            '## chromatic_transposition',
+            '### chromatic_transposition',
             '',
             '```lua',
             'transposition.chromatic_transposition(arg1, arg2)',
@@ -239,18 +239,31 @@ describe('TOC markdown', () => {
     it('parses TOC markdown', () => {
         const toc = [
             {
-                name: 'hello world',
+                name: 'hello_world',
                 description: [],
-                parameters: [],
+                parameters: [
+                    {
+                        name: 'arg1',
+                        type: 'string',
+                        isOptional: false,
+                        description: "I'm a description",
+                    },
+                    {
+                        name: 'arg2',
+                        type: 'string',
+                        isOptional: true,
+                        description: "I'm a description",
+                    },
+                ],
             },
             {
-                name: 'Hello World',
+                name: 'Hello_World',
                 description: [],
                 parameters: [],
             },
         ]
         expect(generateTocMarkdown(toc)).toBe(
-            ['- [hello world](#hello-world)', '- [Hello World](#hello-world)'].join('\n')
+            ['[hello_world(arg1, arg2)](#hello_world)', '[Hello_World()](#hello_world)'].join('\n')
         )
     })
 })

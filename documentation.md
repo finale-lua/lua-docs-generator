@@ -51,8 +51,8 @@ A table of contents will be added to each markdown file automatically. So if you
 …it will automatically generate this table of contents.
 
 ```md
-- [chromatic_transposition](chromatic_transposition)
-- [diatonic_transposition](diatonic_transposition)
+[chromatic_transposition(note, interval, alteration, simplify)](#chromatic_transposition)
+[diatonic_transposition(note, interval, alteration, simplify)](#diatonic_transposition)
 ```
 
 ## Functions

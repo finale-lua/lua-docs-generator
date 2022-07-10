@@ -14,7 +14,7 @@ type ParsedMarkdown = {
 
 export const generateMethodMarkdown = (method: Method, moduleName?: string): ParsedMarkdown => {
     const lines: string[] = []
-    lines.push(`## ${method.name}`)
+    lines.push(`### ${method.name}`)
     lines.push('')
     lines.push('```lua')
     lines.push(
@@ -60,6 +60,11 @@ export const generateModuleMarkdown = (parsedModule: Module): ParsedMarkdown => 
 
 export const generateTocMarkdown = (methods: Method[]): string => {
     return methods
-        .map((method) => `- [${method.name}](#${slugify(method.name.toLowerCase())})`)
+        .map(
+            (method) =>
+                `[${method.name}(${method.parameters
+                    .map((parameter) => parameter.name)
+                    .join(', ')})](#${slugify(method.name.toLowerCase())})`
+        )
         .join('\n')
 }

@@ -1,6 +1,8 @@
-- [chromatic_transposition](#chromatic_transposition)
+## Functions
 
-## chromatic_transposition
+[chromatic_transposition(first, optional)](#chromatic_transposition)
+
+### chromatic_transposition
 
 ```lua
 chromatic_transposition(first, optional)

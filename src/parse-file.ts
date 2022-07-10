@@ -23,7 +23,7 @@ const createFinalOutput = (parsedModule: Module | undefined, methods: Method[]) 
     if (parsedModule) lines.push(generateModuleMarkdown(parsedModule).markdown)
     if (parsedModule && methods.length > 0) lines.push('')
     if (methods.length > 0) {
-        lines.push(generateTocMarkdown(methods))
+        lines.push('## Functions', '', generateTocMarkdown(methods))
         lines.push('')
         lines.push(
             methods
