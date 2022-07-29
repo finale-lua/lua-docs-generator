@@ -4931,7 +4931,7 @@ const slugify_1 = __importDefault(__nccwpck_require__(6225));
 const parameters_1 = __nccwpck_require__(5266);
 const return_value_1 = __nccwpck_require__(5790);
 const generateSourceUrlLink = (repositoryUrl, fileName, lineNumber) => {
-    return `[View source](${repositoryUrl}/${fileName}.lua#L${lineNumber})`;
+    return `[View source](${repositoryUrl}/${fileName}#L${lineNumber})`;
 };
 exports.generateSourceUrlLink = generateSourceUrlLink;
 const generateMethodMarkdown = (method, fileName, repositoryUrl, moduleName) => {

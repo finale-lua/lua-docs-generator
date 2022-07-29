@@ -17,7 +17,7 @@ export const generateSourceUrlLink = (
     fileName: string,
     lineNumber: number
 ) => {
-    return `[View source](${repositoryUrl}/${fileName}.lua#L${lineNumber})`
+    return `[View source](${repositoryUrl}/${fileName}#L${lineNumber})`
 }
 
 export const generateMethodMarkdown = (

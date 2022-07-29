@@ -19,7 +19,7 @@ const tests = ['unit-test-1', 'unit-test-2', 'unit-test-4']
 it.each(tests)('parses %s correctly', (fileName) => {
     const returnedOutput = parseFile(
         `${INPUT_PATH}/${fileName}.lua`,
-        fileName,
+        `${fileName}.lua`,
         'https://github.com/finale-lua/lua-docs-generator/tree/main/test-files/inputs',
         `${GENERATED_OUTPUT_PATH}/${fileName}.md`
     )
