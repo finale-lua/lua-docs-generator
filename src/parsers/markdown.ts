@@ -12,7 +12,20 @@ type ParsedMarkdown = {
     moduleDefinition: boolean
 }
 
-export const generateMethodMarkdown = (method: Method, moduleName?: string): ParsedMarkdown => {
+export const generateSourceUrlLink = (
+    repositoryUrl: string,
+    fileName: string,
+    lineNumber: number
+) => {
+    return `[View source](${repositoryUrl}/${fileName}.lua#L${lineNumber})`
+}
+
+export const generateMethodMarkdown = (
+    method: Method,
+    fileName: string,
+    repositoryUrl: string,
+    moduleName?: string
+): ParsedMarkdown => {
     const lines: string[] = []
     lines.push(`### ${method.name}`)
     lines.push('')
@@ -23,6 +36,10 @@ export const generateMethodMarkdown = (method: Method, moduleName?: string): Par
             .join(', ')})`
     )
     lines.push('```')
+    if (repositoryUrl) {
+        lines.push('')
+        lines.push(generateSourceUrlLink(repositoryUrl, fileName, method.sourceLineNumber))
+    }
     if (method.description.length > 0) {
         lines.push('')
         lines.push(...method.description)

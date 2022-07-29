@@ -4399,173 +4399,6 @@ module.exports = { stringify, stripBom }
 
 /***/ }),
 
-/***/ 7699:
-/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
-
-"use strict";
-
-
-const fs = __nccwpck_require__(7147);
-
-/**
- * @class
- */
-class LineByLine {
-    constructor(file, options) {
-        options = options || {};
-
-        if (!options.readChunk) options.readChunk = 1024;
-
-        if (!options.newLineCharacter) {
-            options.newLineCharacter = 0x0a; //linux line ending
-        } else {
-            options.newLineCharacter = options.newLineCharacter.charCodeAt(0);
-        }
-
-        if (typeof file === 'number') {
-            this.fd = file;
-        } else {
-            this.fd = fs.openSync(file, 'r');
-        }
-
-        this.options = options;
-
-        this.newLineCharacter = options.newLineCharacter;
-
-        this.reset();
-    }
-
-    _searchInBuffer(buffer, hexNeedle) {
-        let found = -1;
-
-        for (let i = 0; i <= buffer.length; i++) {
-            let b_byte = buffer[i];
-            if (b_byte === hexNeedle) {
-                found = i;
-                break;
-            }
-        }
-
-        return found;
-    }
-
-    reset() {
-        this.eofReached = false;
-        this.linesCache = [];
-        this.fdPosition = 0;
-    }
-
-    close() {
-        fs.closeSync(this.fd);
-        this.fd = null;
-    }
-
-    _extractLines(buffer) {
-        let line;
-        const lines = [];
-        let bufferPosition = 0;
-
-        let lastNewLineBufferPosition = 0;
-        while (true) {
-            let bufferPositionValue = buffer[bufferPosition++];
-
-            if (bufferPositionValue === this.newLineCharacter) {
-                line = buffer.slice(lastNewLineBufferPosition, bufferPosition);
-                lines.push(line);
-                lastNewLineBufferPosition = bufferPosition;
-            } else if (bufferPositionValue === undefined) {
-                break;
-            }
-        }
-
-        let leftovers = buffer.slice(lastNewLineBufferPosition, bufferPosition);
-        if (leftovers.length) {
-            lines.push(leftovers);
-        }
-
-        return lines;
-    };
-
-    _readChunk(lineLeftovers) {
-        let totalBytesRead = 0;
-
-        let bytesRead;
-        const buffers = [];
-        do {
-            const readBuffer = new Buffer(this.options.readChunk);
-
-            bytesRead = fs.readSync(this.fd, readBuffer, 0, this.options.readChunk, this.fdPosition);
-            totalBytesRead = totalBytesRead + bytesRead;
-
-            this.fdPosition = this.fdPosition + bytesRead;
-
-            buffers.push(readBuffer);
-        } while (bytesRead && this._searchInBuffer(buffers[buffers.length-1], this.options.newLineCharacter) === -1);
-
-        let bufferData = Buffer.concat(buffers);
-
-        if (bytesRead < this.options.readChunk) {
-            this.eofReached = true;
-            bufferData = bufferData.slice(0, totalBytesRead);
-        }
-
-        if (totalBytesRead) {
-            this.linesCache = this._extractLines(bufferData);
-
-            if (lineLeftovers) {
-                this.linesCache[0] = Buffer.concat([lineLeftovers, this.linesCache[0]]);
-            }
-        }
-
-        return totalBytesRead;
-    }
-
-    next() {
-        if (!this.fd) return false;
-
-        let line = false;
-
-        if (this.eofReached && this.linesCache.length === 0) {
-            return line;
-        }
-
-        let bytesRead;
-
-        if (!this.linesCache.length) {
-            bytesRead = this._readChunk();
-        }
-
-        if (this.linesCache.length) {
-            line = this.linesCache.shift();
-
-            const lastLineCharacter = line[line.length-1];
-
-            if (lastLineCharacter !== this.newLineCharacter) {
-                bytesRead = this._readChunk(line);
-
-                if (bytesRead) {
-                    line = this.linesCache.shift();
-                }
-            }
-        }
-
-        if (this.eofReached && this.linesCache.length === 0) {
-            this.close();
-        }
-
-        if (line && line[line.length-1] === this.newLineCharacter) {
-            line = line.slice(0, line.length-1);
-        }
-
-        return line;
-    }
-}
-
-module.exports = LineByLine;
-
-
-/***/ }),
-
 /***/ 6225:
 /***/ (function(module) {
 
@@ -4964,12 +4797,13 @@ const fs_extra_1 = __importDefault(__nccwpck_require__(807));
 const parse_file_1 = __nccwpck_require__(6025);
 const input = (0, core_1.getInput)('input', { required: false });
 const output = (0, core_1.getInput)('output', { required: false });
+const repositoryUrl = (0, core_1.getInput)('repositoryUrl', { required: false });
 const files = fs_extra_1.default.readdirSync(input);
 const luaFiles = files.filter((file) => file.endsWith('.lua'));
 luaFiles.forEach((fileName) => {
     const inputPath = path_1.default.join(input, fileName);
     const outputPath = path_1.default.join(output, `${fileName.replace(/\.lua$/u, '')}.md`);
-    (0, parse_file_1.parseFile)(inputPath, outputPath);
+    (0, parse_file_1.parseFile)(inputPath, fileName, repositoryUrl, outputPath);
 });
 
 
@@ -4986,8 +4820,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.parseFile = void 0;
 const fs_extra_1 = __importDefault(__nccwpck_require__(807));
-// eslint-disable-next-line import/order -- auto formatting
-const n_readlines_1 = __importDefault(__nccwpck_require__(7699));
 const markdown_1 = __nccwpck_require__(6983);
 const method_1 = __nccwpck_require__(3567);
 const module_1 = __nccwpck_require__(9719);
@@ -4997,7 +4829,7 @@ const writeOutputToFile = (finalOutput, outputFile) => {
         fs_extra_1.default.writeFileSync(outputFile, finalOutput);
     }
 };
-const createFinalOutput = (parsedModule, methods) => {
+const createFinalOutput = (parsedModule, methods, fileName, repositoryUrl) => {
     const lines = [];
     if (parsedModule)
         lines.push((0, markdown_1.generateModuleMarkdown)(parsedModule).markdown);
@@ -5007,32 +4839,38 @@ const createFinalOutput = (parsedModule, methods) => {
         lines.push('## Functions', '', (0, markdown_1.generateTocMarkdown)(methods));
         lines.push('');
         lines.push(methods
-            .map((method) => { var _a; return (0, markdown_1.generateMethodMarkdown)(method, (_a = parsedModule === null || parsedModule === void 0 ? void 0 : parsedModule.name) === null || _a === void 0 ? void 0 : _a.name).markdown; })
+            .map((method) => {
+            var _a;
+            return (0, markdown_1.generateMethodMarkdown)(method, fileName, repositoryUrl, (_a = parsedModule === null || parsedModule === void 0 ? void 0 : parsedModule.name) === null || _a === void 0 ? void 0 : _a.name).markdown;
+        })
             .join('\n\n'));
     }
     lines.push('');
     return lines.join('\n');
 };
-// eslint-disable-next-line sonarjs/cognitive-complexity -- can't make function simpler
-const parseFile = (inputFile, outputFile) => {
-    const liner = new n_readlines_1.default(inputFile);
-    let line = liner.next();
+const parseFile = (inputFile, fileName, repositoryUrl, outputFile
+// eslint-disable-next-line sonarjs/cognitive-complexity -- no way to really make it simpler
+) => {
+    const contents = fs_extra_1.default.readFileSync(inputFile).toString();
+    const lines = contents.split('\n');
     let isCurrentlyMarkdown = false;
     // eslint-disable-next-line init-declarations -- needed for algorithm
     let parsedModule;
     const methods = [];
     let currentComment = [];
-    while (line) {
-        const lineData = line.toString('utf-8');
-        if (lineData.startsWith('--[[')) {
+    for (const [lineNumber, line] of lines.entries()) {
+        if (line.startsWith('--[[')) {
             isCurrentlyMarkdown = true;
         }
-        else if (isCurrentlyMarkdown && lineData.includes(']]')) {
+        else if (isCurrentlyMarkdown && line.includes(']]')) {
             if ((0, module_1.isCommentModule)(currentComment)) {
                 parsedModule = (0, module_1.parseModule)(currentComment);
             }
             else if ((0, method_1.isCommentMethod)(currentComment)) {
-                const method = (0, method_1.parseMethod)(currentComment);
+                const method = (0, method_1.parseMethod)(currentComment, {
+                    endLine: lineNumber,
+                    fileContents: lines,
+                });
                 if (method)
                     methods.push(method);
             }
@@ -5040,11 +4878,10 @@ const parseFile = (inputFile, outputFile) => {
             isCurrentlyMarkdown = false;
         }
         else if (isCurrentlyMarkdown) {
-            currentComment.push(lineData);
+            currentComment.push(line);
         }
-        line = liner.next();
     }
-    const finalOutput = createFinalOutput(parsedModule, methods);
+    const finalOutput = createFinalOutput(parsedModule, methods, fileName, repositoryUrl);
     if (finalOutput !== '')
         writeOutputToFile(finalOutput, outputFile);
     return finalOutput;
@@ -5088,12 +4925,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.generateTocMarkdown = exports.generateModuleMarkdown = exports.generateMethodMarkdown = void 0;
+exports.generateTocMarkdown = exports.generateModuleMarkdown = exports.generateMethodMarkdown = exports.generateSourceUrlLink = void 0;
 // eslint-disable-next-line import/order -- auto formatting
 const slugify_1 = __importDefault(__nccwpck_require__(6225));
 const parameters_1 = __nccwpck_require__(5266);
 const return_value_1 = __nccwpck_require__(5790);
-const generateMethodMarkdown = (method, moduleName) => {
+const generateSourceUrlLink = (repositoryUrl, fileName, lineNumber) => {
+    return `[View source](${repositoryUrl}/${fileName}.lua#L${lineNumber})`;
+};
+exports.generateSourceUrlLink = generateSourceUrlLink;
+const generateMethodMarkdown = (method, fileName, repositoryUrl, moduleName) => {
     const lines = [];
     lines.push(`### ${method.name}`);
     lines.push('');
@@ -5102,6 +4943,10 @@ const generateMethodMarkdown = (method, moduleName) => {
         .map(({ name }) => name)
         .join(', ')})`);
     lines.push('```');
+    if (repositoryUrl) {
+        lines.push('');
+        lines.push((0, exports.generateSourceUrlLink)(repositoryUrl, fileName, method.sourceLineNumber));
+    }
     if (method.description.length > 0) {
         lines.push('');
         lines.push(...method.description);
@@ -5165,12 +5010,13 @@ const isCommentMethod = (lines) => {
     return lines.some((line) => (0, headers_1.isHeader)(line));
 };
 exports.isCommentMethod = isCommentMethod;
-const parseMethod = (lines) => {
+const parseMethod = (lines, metadata) => {
     const method = {
         name: '',
         description: [],
         parameters: [],
         returnValues: [],
+        sourceLineNumber: -1,
     };
     for (const line of lines) {
         if ((0, headers_1.isHeader)(line))
@@ -5181,6 +5027,12 @@ const parseMethod = (lines) => {
             method.returnValues.push((0, return_value_1.parseReturnValue)(line));
         else
             method.description.push(line);
+    }
+    for (let lineNumber = metadata.endLine; lineNumber < metadata.fileContents.length; lineNumber++) {
+        if (metadata.fileContents[lineNumber].includes(method.name)) {
+            method.sourceLineNumber = lineNumber + 1;
+            break;
+        }
     }
     // eslint-disable-next-line no-undefined -- needed algorithmically
     if (method.name === '')

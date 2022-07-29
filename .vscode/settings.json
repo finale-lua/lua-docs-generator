@@ -6,4 +6,7 @@
     "files.exclude": {
         "js": true
     },
+    "files.associations": {
+        "**/outputs/*.md": "text"
+    }
 }

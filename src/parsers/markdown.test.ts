@@ -2,12 +2,17 @@ import { generateMethodMarkdown, generateTocMarkdown } from './markdown'
 
 it('generates markdown from method title', () => {
     expect(
-        generateMethodMarkdown({
-            name: 'chromatic_transposition',
-            description: [],
-            parameters: [],
-            returnValues: [],
-        })
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: [],
+                parameters: [],
+                sourceLineNumber: 27,
+                returnValues: [],
+            },
+            'my-lua.lua',
+            'https://example.com'
+        )
     ).toStrictEqual({
         markdown: [
             '### chromatic_transposition',
@@ -15,6 +20,8 @@ it('generates markdown from method title', () => {
             '```lua',
             'chromatic_transposition()',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
         ].join('\n'),
         header: 'chromatic_transposition',
         moduleDefinition: false,
@@ -28,8 +35,11 @@ it('generates markdown from method title and module name', () => {
                 name: 'chromatic_transposition',
                 description: [],
                 parameters: [],
+                sourceLineNumber: 27,
                 returnValues: [],
             },
+            'my-lua.lua',
+            'https://example.com',
             'transposition'
         )
     ).toStrictEqual({
@@ -39,6 +49,8 @@ it('generates markdown from method title and module name', () => {
             '```lua',
             'transposition.chromatic_transposition()',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
         ].join('\n'),
         header: 'chromatic_transposition',
         moduleDefinition: false,
@@ -52,8 +64,11 @@ it('generates markdown from method with description', () => {
                 name: 'chromatic_transposition',
                 description: ['I am a description', '', 'I span two paragraphs'],
                 parameters: [],
+                sourceLineNumber: 27,
                 returnValues: [],
             },
+            'my-lua.lua',
+            'https://example.com',
             'transposition'
         )
     ).toStrictEqual({
@@ -63,6 +78,8 @@ it('generates markdown from method with description', () => {
             '```lua',
             'transposition.chromatic_transposition()',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
             '',
             'I am a description',
             '',
@@ -95,8 +112,11 @@ it('removes excess empty lines from description', () => {
                     '',
                 ],
                 parameters: [],
+                sourceLineNumber: 27,
                 returnValues: [],
             },
+            'my-lua.lua',
+            'https://example.com',
             'transposition'
         )
     ).toStrictEqual({
@@ -106,6 +126,8 @@ it('removes excess empty lines from description', () => {
             '```lua',
             'transposition.chromatic_transposition()',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
             '',
             'I am a description',
             '',
@@ -121,25 +143,30 @@ it('removes excess empty lines from description', () => {
 
 it('generates markdown from method with parameters', () => {
     expect(
-        generateMethodMarkdown({
-            name: 'chromatic_transposition',
-            description: [],
-            parameters: [
-                {
-                    name: 'arg1',
-                    type: 'string',
-                    isOptional: false,
-                    description: 'Text of the first parameter',
-                },
-                {
-                    name: 'arg2',
-                    type: 'string',
-                    isOptional: true,
-                    description: 'Text of the first parameter',
-                },
-            ],
-            returnValues: [],
-        })
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: [],
+                parameters: [
+                    {
+                        name: 'arg1',
+                        type: 'string',
+                        isOptional: false,
+                        description: 'Text of the first parameter',
+                    },
+                    {
+                        name: 'arg2',
+                        type: 'string',
+                        isOptional: true,
+                        description: 'Text of the first parameter',
+                    },
+                ],
+                sourceLineNumber: 27,
+                returnValues: [],
+            },
+            'my-lua.lua',
+            'https://example.com'
+        )
     ).toStrictEqual({
         markdown: [
             '### chromatic_transposition',
@@ -147,6 +174,8 @@ it('generates markdown from method with parameters', () => {
             '```lua',
             'chromatic_transposition(arg1, arg2)',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
             '',
             '| Input | Type | Description |',
             '| ----- | ---- | ----------- |',
@@ -160,17 +189,22 @@ it('generates markdown from method with parameters', () => {
 
 it('generates markdown from method with return value', () => {
     expect(
-        generateMethodMarkdown({
-            name: 'chromatic_transposition',
-            description: [],
-            parameters: [],
-            returnValues: [
-                {
-                    type: 'string',
-                    description: 'Text of the return value',
-                },
-            ],
-        })
+        generateMethodMarkdown(
+            {
+                name: 'chromatic_transposition',
+                description: [],
+                parameters: [],
+                sourceLineNumber: 29,
+                returnValues: [
+                    {
+                        type: 'string',
+                        description: 'Text of the return value',
+                    },
+                ],
+            },
+            'my-lua.lua',
+            'https://example.com'
+        )
     ).toStrictEqual({
         markdown: [
             '### chromatic_transposition',
@@ -178,6 +212,8 @@ it('generates markdown from method with return value', () => {
             '```lua',
             'chromatic_transposition()',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L29)',
             '',
             '| Return type | Description |',
             '| ----------- | ----------- |',
@@ -209,6 +245,7 @@ it('generates markdown from method with everything', () => {
                         description: 'Text of the first parameter',
                     },
                 ],
+                sourceLineNumber: 27,
                 returnValues: [
                     {
                         type: 'string',
@@ -220,6 +257,8 @@ it('generates markdown from method with everything', () => {
                     },
                 ],
             },
+            'my-lua.lua',
+            'https://example.com',
             'transposition'
         )
     ).toStrictEqual({
@@ -229,6 +268,8 @@ it('generates markdown from method with everything', () => {
             '```lua',
             'transposition.chromatic_transposition(arg1, arg2)',
             '```',
+            '',
+            '[View source](https://example.com/my-lua.lua.lua#L27)',
             '',
             'I am a description',
             '',
@@ -269,12 +310,14 @@ describe('TOC markdown', () => {
                         description: "I'm a description",
                     },
                 ],
+                sourceLineNumber: 27,
                 returnValues: [],
             },
             {
                 name: 'Hello_World',
                 description: [],
                 parameters: [],
+                sourceLineNumber: 29,
                 returnValues: [],
             },
         ]

@@ -19,6 +19,8 @@ const tests = ['unit-test-1', 'unit-test-2', 'unit-test-4']
 it.each(tests)('parses %s correctly', (fileName) => {
     const returnedOutput = parseFile(
         `${INPUT_PATH}/${fileName}.lua`,
+        fileName,
+        'https://github.com/finale-lua/lua-docs-generator/tree/main/test-files/inputs',
         `${GENERATED_OUTPUT_PATH}/${fileName}.md`
     )
     const expectedOutput = fs.readFileSync(`${OUTPUT_PATH}/${fileName}.md`).toString()
@@ -30,6 +32,8 @@ it.each(tests)('parses %s correctly', (fileName) => {
 it('if no markdown, don\t create an output', () => {
     const returnedOutput = parseFile(
         `${INPUT_PATH}/unit-test-3.lua`,
+        'unit-test-3.lua',
+        'https://github.com/finale-lua/lua-docs-generator/tree/main/test-files/inputs',
         `${GENERATED_OUTPUT_PATH}/unit-test-3.md`
     )
     expect(returnedOutput).toBe('')

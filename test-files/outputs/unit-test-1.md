@@ -13,6 +13,8 @@ An overall description of the module.
 transposition.chromatic_transposition(first, optional)
 ```
 
+[View source](https://github.com/finale-lua/lua-docs-generator/tree/main/test-files/inputs/unit-test-1.lua#L22)
+
 A description of how the code works
 
 | Input | Type | Description |
@@ -29,6 +31,8 @@ A description of how the code works
 ```lua
 transposition.diatonic_transposition(note)
 ```
+
+[View source](https://github.com/finale-lua/lua-docs-generator/tree/main/test-files/inputs/unit-test-1.lua#L36)
 
 Another a description of how the code works
 
