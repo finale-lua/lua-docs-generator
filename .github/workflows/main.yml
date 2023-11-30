@@ -9,8 +9,8 @@ jobs:
       matrix:
         node: [14, 16, 18]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/checkout@v3.6.0
+      - uses: actions/setup-node@v3.8.2
         with:
           node-version: ${{ matrix.node }}
       - run: npx pnpm i
@@ -21,11 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: test-push
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.6.0
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v3.8.2
         with:
           node-version: 14
       - run: npx pnpm i
